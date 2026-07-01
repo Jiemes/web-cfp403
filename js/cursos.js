@@ -184,4 +184,41 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    // --- 5. Lógica de Filtrado Dinámico de Cursos ---
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const filterItems = document.querySelectorAll('.filter-item');
+
+    if (filterBtns.length > 0 && filterItems.length > 0) {
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remover clase active de todos los botones
+                filterBtns.forEach(b => b.classList.remove('active'));
+                // Añadir clase active al botón clickeado
+                btn.classList.add('active');
+
+                const filterValue = btn.getAttribute('data-filter');
+
+                filterItems.forEach(item => {
+                    // Animación de salida (opacidad 0, escala pequeña)
+                    item.style.opacity = '0';
+                    item.style.transform = 'scale(0.9)';
+
+                    setTimeout(() => {
+                        if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+                            item.classList.remove('hide');
+                            // Pequeño delay para que el display:block se aplique antes de animar
+                            setTimeout(() => {
+                                item.style.opacity = '1';
+                                item.style.transform = 'scale(1)';
+                            }, 50);
+                        } else {
+                            item.classList.add('hide');
+                        }
+                    }, 300); // Esperar que termine la transición CSS (0.3s)
+                });
+            });
+        });
+    }
+
 });

@@ -21,13 +21,13 @@
         <div class="container nav-container">
             <div class="logo">
                 <a href="index.html" class="d-flex align-items-center" style="display: flex; align-items: center; gap: 12px;">
-                    <!-- El logo real se inyecta visualmente aquí tras el splash o se mantiene este estático para fallbacks -->
                     <img src="img/LOGO CFP 403 CHICO (1).png" alt="Logo CFP 403" class="nav-logo" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MCIgaGVpZ2h0PSI1MCIgdmlld0JveD0iMCAwIDUwIDUwIj48cmVjdCB3aWR0aD0iNTAiIGhlaWdodD0iNTAiIGZpbGw9IiMwMEJDRDQiLz48dGV4dCB4PSIyNSIgeT0iMjciIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmaWxsPSJ3aGl0ZSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+Q0ZQPC90ZXh0Pjwvc3ZnPg=='" />
                     <h1>CFP <span class="text-primary">N° 403</span> Mercedes</h1>
                 </a>
             </div>
             <nav class="nav-links">
                 <a href="#bento-dashboard" class="active touch-target">Inicio</a>
+                <a href="#entornos" class="touch-target">Entornos</a>
                 <a href="#cursos" class="touch-target">Trayectos Formativos</a>
                 <a href="portfolio.html" class="touch-target">Galería</a>
                 <a href="register.html" class="btn btn-gradient touch-target">Pre-inscribirse</a>
@@ -40,19 +40,27 @@
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container hero-content">
-            <h1 class="hero-title">Formación Profesional para el <span class="text-gradient">Futuro Digital</span></h1>
-            <p class="hero-subtitle">Cursos gratuitos con certificación oficial en programación, robótica, diseño y administración.</p>
-            <div class="hero-actions">
+    <!-- Hero Section Animada -->
+    <section class="hero hero-slideshow">
+        <div class="hero-bg-layer slide-active" style="background-image: url('img/practicas-1.jpg');"></div>
+        <div class="hero-bg-layer" style="background-image: url('img/practicas-2.jpg');"></div>
+        <div class="hero-bg-layer" style="background-image: url('img/curso-web.jpg');"></div>
+        <div class="hero-overlay"></div>
+        
+        <div class="container hero-content relative z-10">
+            <h1 class="hero-title">
+                Formación Profesional<br>
+                <span class="text-gradient typewriter-text"></span><span class="typewriter-cursor">|</span>
+            </h1>
+            <p class="hero-subtitle mt-4">Cursos gratuitos con certificación oficial en programación, robótica, diseño y administración.</p>
+            <div class="hero-actions mt-4">
                 <a href="#cursos" class="btn btn-gradient btn-large touch-target">Ver Cursos 2026</a>
             </div>
         </div>
     </section>
 
-    <!-- Bento Dashboard (Institucional + Novedades + AIC) -->
-    <section id="bento-dashboard" class="section">
+    <!-- Bento Dashboard (Institucional + Novedades) -->
+    <section id="bento-dashboard" class="section pb-0">
         <div class="container">
             <div class="bento-grid">
                 <!-- Institucional (Feature Card) -->
@@ -66,39 +74,26 @@
                     <div class="bento-image-bg" style="background-image: url('img/practicas-1.jpg');"></div>
                 </div>
 
-                <!-- AIC Card -->
-                <div class="bento-card bento-aic">
-                    <div class="bento-content">
-                        <h3 class="mb-3">Normas de Convivencia</h3>
-                        <ul class="aic-list">
-                            <li><span class="icon">⏱️</span> Puntualidad y Asistencia</li>
-                            <li><span class="icon">♻️</span> Uso Responsable de Insumos</li>
-                            <li><span class="icon">🧹</span> Orden y Limpieza</li>
-                            <li><span class="icon">🤝</span> Mediación Pedagógica</li>
-                        </ul>
-                    </div>
-                </div>
-
                 <!-- Novedades (Carousel Scroll Snap) -->
                 <div class="bento-card bento-novedades">
                     <div class="bento-header">
                         <h3>Agenda y Novedades</h3>
                     </div>
-                    <div class="novedades-carousel">
+                    <div class="novedades-carousel touch-swipe-carousel">
                         <div class="news-card">
                             <span class="text-sm text-primary font-bold">15 Mar 2026</span>
-                            <h4>Apertura de inscripciones 2do cuatrimestre</h4>
+                            <h4>Apertura de inscripciones</h4>
                             <p class="text-sm text-gray">Reserva tu vacante para los nuevos cursos.</p>
                         </div>
                         <div class="news-card">
                             <span class="text-sm text-primary font-bold">10 Mar 2026</span>
                             <h4>Exposición Anual de Proyectos</h4>
-                            <p class="text-sm text-gray">Muestra de trabajos de alumnos de Diseño y Programación.</p>
+                            <p class="text-sm text-gray">Muestra de trabajos de alumnos en Sede Central.</p>
                         </div>
                         <div class="news-card">
                             <span class="text-sm text-primary font-bold">01 Mar 2026</span>
                             <h4>Inauguración Taller Robótica</h4>
-                            <p class="text-sm text-gray">Nuevo equipamiento en Sede Central.</p>
+                            <p class="text-sm text-gray">Nuevo equipamiento de última generación.</p>
                         </div>
                     </div>
                 </div>
@@ -106,15 +101,54 @@
         </div>
     </section>
 
-    <!-- Catálogo de Cursos Dinámico -->
+    <!-- Entornos y Proyectos Interactivos -->
+    <section id="entornos" class="section">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center mb-4" style="display:flex; justify-content:space-between; align-items:center;">
+                <h2 class="section-title" style="margin-bottom:0;">Entornos Formativos</h2>
+                <span class="text-gray text-sm">Desliza para explorar &rarr;</span>
+            </div>
+            
+            <div class="entornos-carousel touch-swipe-carousel">
+                <div class="entorno-card" style="background-image: linear-gradient(to top, rgba(0,0,0,0.8), transparent), url('img/curso-web.jpg');">
+                    <div class="entorno-info">
+                        <h3>Aula de Informática</h3>
+                        <p>Equipada con PCs de última generación, ideal para desarrollo y diseño.</p>
+                    </div>
+                </div>
+                <div class="entorno-card" style="background-image: linear-gradient(to top, rgba(0,0,0,0.8), transparent), url('img/curso-diseno.jpg');">
+                    <div class="entorno-info">
+                        <h3>Huertas Interactivas</h3>
+                        <p>Proyecto agroecológico de economía circular y soberanía alimentaria.</p>
+                    </div>
+                </div>
+                <div class="entorno-card" style="background-image: linear-gradient(to top, rgba(0,0,0,0.8), transparent), url('img/practicas-2.jpg');">
+                    <div class="entorno-info">
+                        <h3>Proyectos Destacados</h3>
+                        <p>Videojuegos, sitios web y diseños textiles de nuestros egresados.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Catálogo de Cursos Dinámico con Filtrado -->
     <section id="cursos" class="section bg-light">
         <div class="container">
-            <h2 class="section-title">Trayectos Formativos 2026</h2>
+            <h2 class="section-title text-center">Trayectos Formativos 2026</h2>
             
-            <h3 class="category-title">Tecnología y Habilidades Digitales</h3>
-            <div class="grid grid-3 mb-5">
-                <!-- Se usa data-course-id para cargar la información dinámica en el modal -->
-                <div class="card course-card touch-target" data-course-id="ia">
+            <!-- Tabs de Filtrado -->
+            <div class="course-filters">
+                <button class="filter-btn active touch-target" data-filter="all">Todos</button>
+                <button class="filter-btn touch-target" data-filter="tecnologia">Tecnología</button>
+                <button class="filter-btn touch-target" data-filter="gastronomia">Gastronomía y Servicios</button>
+                <button class="filter-btn touch-target" data-filter="agro">Agro y Textil</button>
+            </div>
+
+            <!-- Grilla Dinámica de Cursos -->
+            <div class="grid grid-3 mt-4 course-grid-container">
+                <!-- Tecnología -->
+                <div class="card course-card touch-target filter-item" data-category="tecnologia" data-course-id="ia">
                     <img src="img/curso-web.jpg" alt="IA" class="card-img">
                     <div class="card-content">
                         <span class="badge">Tecnología</span>
@@ -122,7 +156,7 @@
                         <div class="course-cta">Ver Detalles &rarr;</div>
                     </div>
                 </div>
-                <div class="card course-card touch-target" data-course-id="marketing">
+                <div class="card course-card touch-target filter-item" data-category="tecnologia" data-course-id="marketing">
                     <img src="img/curso-diseno.jpg" alt="Marketing" class="card-img">
                     <div class="card-content">
                         <span class="badge">Tecnología</span>
@@ -130,15 +164,15 @@
                         <div class="course-cta">Ver Detalles &rarr;</div>
                     </div>
                 </div>
-                <div class="card course-card touch-target" data-course-id="software">
-                    <img src="img/curso-web.jpg" alt="Software" class="card-img">
+                <div class="card course-card touch-target filter-item" data-category="tecnologia" data-course-id="software">
+                    <img src="img/programacion.jpg" alt="Software" class="card-img" onerror="this.src='img/curso-web.jpg'">
                     <div class="card-content">
                         <span class="badge">Tecnología</span>
                         <h3 class="mt-2">Desarrollo de Software y Videojuegos</h3>
                         <div class="course-cta">Ver Detalles &rarr;</div>
                     </div>
                 </div>
-                <div class="card course-card touch-target" data-course-id="ingles">
+                <div class="card course-card touch-target filter-item" data-category="tecnologia" data-course-id="ingles">
                     <img src="img/curso-web.jpg" alt="Inglés" class="card-img">
                     <div class="card-content">
                         <span class="badge">Idiomas</span>
@@ -146,11 +180,9 @@
                         <div class="course-cta">Ver Detalles &rarr;</div>
                     </div>
                 </div>
-            </div>
 
-            <h3 class="category-title">Gastronomía y Servicios</h3>
-            <div class="grid grid-3 mb-5">
-                <div class="card course-card touch-target" data-course-id="comedor">
+                <!-- Gastronomía y Servicios -->
+                <div class="card course-card touch-target filter-item" data-category="gastronomia" data-course-id="comedor">
                     <img src="img/curso-diseno.jpg" alt="Comedor" class="card-img">
                     <div class="card-content">
                         <span class="badge">Gastronomía</span>
@@ -158,7 +190,7 @@
                         <div class="course-cta">Ver Detalles &rarr;</div>
                     </div>
                 </div>
-                <div class="card course-card touch-target" data-course-id="pastas">
+                <div class="card course-card touch-target filter-item" data-category="gastronomia" data-course-id="pastas">
                     <img src="img/curso-diseno.jpg" alt="Pastas" class="card-img">
                     <div class="card-content">
                         <span class="badge">Gastronomía</span>
@@ -166,7 +198,7 @@
                         <div class="course-cta">Ver Detalles &rarr;</div>
                     </div>
                 </div>
-                <div class="card course-card touch-target" data-course-id="eventos">
+                <div class="card course-card touch-target filter-item" data-category="gastronomia" data-course-id="eventos">
                     <img src="img/curso-diseno.jpg" alt="Eventos" class="card-img">
                     <div class="card-content">
                         <span class="badge">Servicios</span>
@@ -174,7 +206,7 @@
                         <div class="course-cta">Ver Detalles &rarr;</div>
                     </div>
                 </div>
-                <div class="card course-card touch-target" data-course-id="limpieza">
+                <div class="card course-card touch-target filter-item" data-category="gastronomia" data-course-id="limpieza">
                     <img src="img/curso-diseno.jpg" alt="Limpieza" class="card-img">
                     <div class="card-content">
                         <span class="badge">Servicios</span>
@@ -182,11 +214,9 @@
                         <div class="course-cta">Ver Detalles &rarr;</div>
                     </div>
                 </div>
-            </div>
 
-            <h3 class="category-title">Agro y Textil</h3>
-            <div class="grid grid-3">
-                <div class="card course-card touch-target" data-course-id="horticola">
+                <!-- Agro y Textil -->
+                <div class="card course-card touch-target filter-item" data-category="agro" data-course-id="horticola">
                     <img src="img/curso-web.jpg" alt="Hortícola" class="card-img">
                     <div class="card-content">
                         <span class="badge">Agro</span>
@@ -194,7 +224,7 @@
                         <div class="course-cta">Ver Detalles &rarr;</div>
                     </div>
                 </div>
-                <div class="card course-card touch-target" data-course-id="hongos">
+                <div class="card course-card touch-target filter-item" data-category="agro" data-course-id="hongos">
                     <img src="img/curso-web.jpg" alt="Hongos" class="card-img">
                     <div class="card-content">
                         <span class="badge">Agro</span>
@@ -202,7 +232,7 @@
                         <div class="course-cta">Ver Detalles &rarr;</div>
                     </div>
                 </div>
-                <div class="card course-card touch-target" data-course-id="textil">
+                <div class="card course-card touch-target filter-item" data-category="agro" data-course-id="textil">
                     <img src="img/curso-diseno.jpg" alt="Textil" class="card-img">
                     <div class="card-content">
                         <span class="badge">Textil</span>
@@ -304,7 +334,7 @@
         </svg>
     </a>
 
-    <script src="js/cursos.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/cursos.js"></script>
 </body>
 </html>
