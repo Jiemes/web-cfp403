@@ -264,18 +264,25 @@
                 <button id="close-modal" class="touch-target close-btn" aria-label="Cerrar">&times;</button>
             </div>
             <div class="slide-over-body">
-                <img id="modal-img" src="" alt="Flyer del curso" class="modal-banner">
+                <img id="modal-img" src="" alt="Flyer del curso" class="modal-banner" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MDAiIGhlaWdodD0iMjAwIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMmMzZTUwIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjIwIiBmaWxsPSJ3aGl0ZSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+QmFubmVyIGRlbCBDdXJzbzwvdGV4dD48L3N2Zz4='">
                 <div class="modal-info">
                     <div class="info-row"><span class="icon">📍</span> <strong id="modal-sede">Sede Central</strong></div>
                     <div class="info-row"><span class="icon">⏱️</span> <strong id="modal-duracion">1 Año</strong></div>
                     <div class="info-row"><span class="icon">📅</span> <strong id="modal-horario">Lunes y Miércoles</strong></div>
                 </div>
-                <div class="modal-section">
-                    <h4>Perfil del Egresado</h4>
+
+                <!-- Bloque dinámico de alto contraste: ¿Qué vas a aprender? -->
+                <div id="modal-highlight-container" class="modal-highlight-box" style="display: none;">
+                    <h4>¿Qué vas a aprender?</h4>
+                    <p id="modal-highlight-text"></p>
+                </div>
+
+                <div class="modal-section mt-4">
+                    <h4 class="text-primary">Perfil Profesional / Salida Laboral</h4>
                     <p id="modal-perfil" class="text-gray text-sm">Descripción del perfil...</p>
                 </div>
                 <div class="modal-section">
-                    <h4>Requisitos</h4>
+                    <h4 class="text-primary">Requisitos</h4>
                     <ul id="modal-requisitos" class="text-gray text-sm modal-list">
                         <li>DNI original y copia</li>
                         <li>Estudios primarios completos</li>
@@ -283,7 +290,7 @@
                 </div>
             </div>
             <div class="slide-over-footer">
-                <a href="#" id="modal-register-btn" class="btn btn-primary btn-block btn-large touch-target">Pre-inscribirme</a>
+                <a href="#" id="modal-register-btn" class="btn btn-primary btn-block btn-large touch-target cta-inscripcion">Iniciar Inscripción Segura</a>
             </div>
         </div>
     </div>
@@ -297,6 +304,7 @@
         </svg>
     </a>
 
+    <script src="js/cursos.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>
