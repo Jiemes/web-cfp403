@@ -5,30 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CFP N° 403 Mercedes | Centro de Formación Profesional</title>
     <meta name="description" content="Centro de Formación Profesional N° 403 Mercedes. Cursos de formación profesional con certificación oficial.">
-    <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+    <!-- Splash Screen -->
+    <div id="splash-screen">
+        <img src="img/LOGO CFP 403 CHICO (1).png" alt="Logo CFP 403" class="splash-logo" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MCIgaGVpZ2h0PSI1MCIgdmlld0JveD0iMCAwIDUwIDUwIj48cmVjdCB3aWR0aD0iNTAiIGhlaWdodD0iNTAiIGZpbGw9IiMwMEJDRDQiLz48dGV4dCB4PSIyNSIgeT0iMjciIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmaWxsPSJ3aGl0ZSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+Q0ZQPC90ZXh0Pjwvc3ZnPg=='">
+    </div>
+
     <!-- Navbar -->
     <header class="navbar">
         <div class="container nav-container">
             <div class="logo">
                 <a href="index.html" class="d-flex align-items-center" style="display: flex; align-items: center; gap: 12px;">
-                    <img src="img/LOGO CFP 403 CHICO (1).png" alt="Logo CFP 403" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MCIgaGVpZ2h0PSI1MCIgdmlld0JveD0iMCAwIDUwIDUwIj48cmVjdCB3aWR0aD0iNTAiIGhlaWdodD0iNTAiIGZpbGw9IiMwMEJDRDQiLz48dGV4dCB4PSIyNSIgeT0iMjciIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmaWxsPSJ3aGl0ZSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+Q0ZQPC90ZXh0Pjwvc3ZnPg=='" />
+                    <!-- El logo real se inyecta visualmente aquí tras el splash o se mantiene este estático para fallbacks -->
+                    <img src="img/LOGO CFP 403 CHICO (1).png" alt="Logo CFP 403" class="nav-logo" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MCIgaGVpZ2h0PSI1MCIgdmlld0JveD0iMCAwIDUwIDUwIj48cmVjdCB3aWR0aD0iNTAiIGhlaWdodD0iNTAiIGZpbGw9IiMwMEJDRDQiLz48dGV4dCB4PSIyNSIgeT0iMjciIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmaWxsPSJ3aGl0ZSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+Q0ZQPC90ZXh0Pjwvc3ZnPg=='" />
                     <h1>CFP <span class="text-primary">N° 403</span> Mercedes</h1>
                 </a>
             </div>
             <nav class="nav-links">
-                <a href="index.html" class="active">Inicio</a>
-                <a href="#cursos">Cursos</a>
-                <a href="portfolio.html">Galería de Proyectos</a>
-                <a href="#institucional">Institucional</a>
-                <a href="register.html" class="btn btn-gradient">Ingresar / Registrarse</a>
+                <a href="#bento-dashboard" class="active touch-target">Inicio</a>
+                <a href="#cursos" class="touch-target">Trayectos Formativos</a>
+                <a href="portfolio.html" class="touch-target">Galería</a>
+                <a href="register.html" class="btn btn-gradient touch-target">Pre-inscribirse</a>
             </nav>
-            <button class="mobile-menu-btn" aria-label="Abrir menú" id="mobile-menu-btn">
+            <button class="mobile-menu-btn touch-target" aria-label="Abrir menú" id="mobile-menu-btn">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -42,156 +46,168 @@
             <h1 class="hero-title">Formación Profesional para el <span class="text-gradient">Futuro Digital</span></h1>
             <p class="hero-subtitle">Cursos gratuitos con certificación oficial en programación, robótica, diseño y administración.</p>
             <div class="hero-actions">
-                <a href="#cursos" class="btn btn-gradient btn-large">Ver Cursos Disponibles</a>
-                <a href="portfolio.html" class="btn btn-outline btn-large" style="border-color: white; color: white;">Ver Trabajos de Alumnos</a>
+                <a href="#cursos" class="btn btn-gradient btn-large touch-target">Ver Cursos 2026</a>
             </div>
         </div>
     </section>
 
-    <!-- Catálogo de Cursos -->
+    <!-- Bento Dashboard (Institucional + Novedades + AIC) -->
+    <section id="bento-dashboard" class="section">
+        <div class="container">
+            <div class="bento-grid">
+                <!-- Institucional (Feature Card) -->
+                <div class="bento-card bento-institucional">
+                    <div class="bento-content">
+                        <span class="badge mb-2">Resolución RESOC-2023-111</span>
+                        <h2 class="text-primary mb-3">Nuestra Misión</h2>
+                        <p class="text-gray mb-4">El <strong>Centro de Formación Profesional N° 403</strong> de Mercedes forma operarios competentes para el mundo de hoy. Contamos con +550 alumnos y operamos en dos sedes estratégicas (Sede 1: Calle 31 Nº 51, Sede Central: Calle 32 Nº 1220).</p>
+                        <a href="portfolio.html" class="btn btn-outline touch-target">Ver proyectos de alumnos</a>
+                    </div>
+                    <div class="bento-image-bg" style="background-image: url('img/practicas-1.jpg');"></div>
+                </div>
+
+                <!-- AIC Card -->
+                <div class="bento-card bento-aic">
+                    <div class="bento-content">
+                        <h3 class="mb-3">Normas de Convivencia</h3>
+                        <ul class="aic-list">
+                            <li><span class="icon">⏱️</span> Puntualidad y Asistencia</li>
+                            <li><span class="icon">♻️</span> Uso Responsable de Insumos</li>
+                            <li><span class="icon">🧹</span> Orden y Limpieza</li>
+                            <li><span class="icon">🤝</span> Mediación Pedagógica</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Novedades (Carousel Scroll Snap) -->
+                <div class="bento-card bento-novedades">
+                    <div class="bento-header">
+                        <h3>Agenda y Novedades</h3>
+                    </div>
+                    <div class="novedades-carousel">
+                        <div class="news-card">
+                            <span class="text-sm text-primary font-bold">15 Mar 2026</span>
+                            <h4>Apertura de inscripciones 2do cuatrimestre</h4>
+                            <p class="text-sm text-gray">Reserva tu vacante para los nuevos cursos.</p>
+                        </div>
+                        <div class="news-card">
+                            <span class="text-sm text-primary font-bold">10 Mar 2026</span>
+                            <h4>Exposición Anual de Proyectos</h4>
+                            <p class="text-sm text-gray">Muestra de trabajos de alumnos de Diseño y Programación.</p>
+                        </div>
+                        <div class="news-card">
+                            <span class="text-sm text-primary font-bold">01 Mar 2026</span>
+                            <h4>Inauguración Taller Robótica</h4>
+                            <p class="text-sm text-gray">Nuevo equipamiento en Sede Central.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Catálogo de Cursos Dinámico -->
     <section id="cursos" class="section bg-light">
         <div class="container">
-            <h2 class="section-title">Nuestros Trayectos Formativos 2026</h2>
+            <h2 class="section-title">Trayectos Formativos 2026</h2>
             
-            <!-- Categoría 1 -->
-            <h3 class="mt-4 mb-3 text-primary" style="font-size: 1.5rem;">Tecnología y Habilidades Digitales</h3>
+            <h3 class="category-title">Tecnología y Habilidades Digitales</h3>
             <div class="grid grid-3 mb-5">
-                <div class="card course-card">
+                <!-- Se usa data-course-id para cargar la información dinámica en el modal -->
+                <div class="card course-card touch-target" data-course-id="ia">
+                    <img src="img/curso-web.jpg" alt="IA" class="card-img">
                     <div class="card-content">
                         <span class="badge">Tecnología</span>
-                        <h3>Habilidades Digitales e Inteligencia Artificial</h3>
-                        <a href="register.html?curso=ia" class="btn btn-primary btn-block mt-4">Pre-inscribirme</a>
+                        <h3 class="mt-2">Habilidades Digitales e Inteligencia Artificial</h3>
+                        <div class="course-cta">Ver Detalles &rarr;</div>
                     </div>
                 </div>
-                <div class="card course-card">
+                <div class="card course-card touch-target" data-course-id="marketing">
+                    <img src="img/curso-diseno.jpg" alt="Marketing" class="card-img">
                     <div class="card-content">
                         <span class="badge">Tecnología</span>
-                        <h3>Diseño y Marketing Digital</h3>
-                        <a href="register.html?curso=marketing" class="btn btn-primary btn-block mt-4">Pre-inscribirme</a>
+                        <h3 class="mt-2">Diseño y Marketing Digital</h3>
+                        <div class="course-cta">Ver Detalles &rarr;</div>
                     </div>
                 </div>
-                <div class="card course-card">
+                <div class="card course-card touch-target" data-course-id="software">
+                    <img src="img/curso-web.jpg" alt="Software" class="card-img">
                     <div class="card-content">
                         <span class="badge">Tecnología</span>
-                        <h3>Desarrollo de Software y Videojuegos</h3>
-                        <a href="register.html?curso=software" class="btn btn-primary btn-block mt-4">Pre-inscribirme</a>
+                        <h3 class="mt-2">Desarrollo de Software y Videojuegos</h3>
+                        <div class="course-cta">Ver Detalles &rarr;</div>
                     </div>
                 </div>
-                <div class="card course-card">
+                <div class="card course-card touch-target" data-course-id="ingles">
+                    <img src="img/curso-web.jpg" alt="Inglés" class="card-img">
                     <div class="card-content">
                         <span class="badge">Idiomas</span>
-                        <h3>Inglés Aplicado al Mundo Digital</h3>
-                        <a href="register.html?curso=ingles" class="btn btn-primary btn-block mt-4">Pre-inscribirme</a>
+                        <h3 class="mt-2">Inglés Aplicado al Mundo Digital</h3>
+                        <div class="course-cta">Ver Detalles &rarr;</div>
                     </div>
                 </div>
             </div>
 
-            <!-- Categoría 2 -->
-            <h3 class="mt-4 mb-3 text-primary" style="font-size: 1.5rem;">Gastronomía y Servicios</h3>
+            <h3 class="category-title">Gastronomía y Servicios</h3>
             <div class="grid grid-3 mb-5">
-                <div class="card course-card">
+                <div class="card course-card touch-target" data-course-id="comedor">
+                    <img src="img/curso-diseno.jpg" alt="Comedor" class="card-img">
                     <div class="card-content">
                         <span class="badge">Gastronomía</span>
-                        <h3>Cocinero/a para Comedor Escolar</h3>
-                        <a href="register.html?curso=comedor" class="btn btn-primary btn-block mt-4">Pre-inscribirme</a>
+                        <h3 class="mt-2">Cocinero/a para Comedor Escolar</h3>
+                        <div class="course-cta">Ver Detalles &rarr;</div>
                     </div>
                 </div>
-                <div class="card course-card">
+                <div class="card course-card touch-target" data-course-id="pastas">
+                    <img src="img/curso-diseno.jpg" alt="Pastas" class="card-img">
                     <div class="card-content">
                         <span class="badge">Gastronomía</span>
-                        <h3>Elaborador/a de Pastas Saludables</h3>
-                        <a href="register.html?curso=pastas" class="btn btn-primary btn-block mt-4">Pre-inscribirme</a>
+                        <h3 class="mt-2">Elaborador/a de Pastas Saludables</h3>
+                        <div class="course-cta">Ver Detalles &rarr;</div>
                     </div>
                 </div>
-                <div class="card course-card">
+                <div class="card course-card touch-target" data-course-id="eventos">
+                    <img src="img/curso-diseno.jpg" alt="Eventos" class="card-img">
                     <div class="card-content">
                         <span class="badge">Servicios</span>
-                        <h3>Organizador/a de Eventos</h3>
-                        <a href="register.html?curso=eventos" class="btn btn-primary btn-block mt-4">Pre-inscribirme</a>
+                        <h3 class="mt-2">Organizador/a de Eventos</h3>
+                        <div class="course-cta">Ver Detalles &rarr;</div>
                     </div>
                 </div>
-                <div class="card course-card">
+                <div class="card course-card touch-target" data-course-id="limpieza">
+                    <img src="img/curso-diseno.jpg" alt="Limpieza" class="card-img">
                     <div class="card-content">
                         <span class="badge">Servicios</span>
-                        <h3>Limpieza Institucional</h3>
-                        <a href="register.html?curso=limpieza" class="btn btn-primary btn-block mt-4">Pre-inscribirme</a>
+                        <h3 class="mt-2">Limpieza Institucional</h3>
+                        <div class="course-cta">Ver Detalles &rarr;</div>
                     </div>
                 </div>
             </div>
 
-            <!-- Categoría 3 -->
-            <h3 class="mt-4 mb-3 text-primary" style="font-size: 1.5rem;">Agro y Textil</h3>
+            <h3 class="category-title">Agro y Textil</h3>
             <div class="grid grid-3">
-                <div class="card course-card">
+                <div class="card course-card touch-target" data-course-id="horticola">
+                    <img src="img/curso-web.jpg" alt="Hortícola" class="card-img">
                     <div class="card-content">
                         <span class="badge">Agro</span>
-                        <h3>Producción Hortícola y Cultivos Especializados</h3>
-                        <a href="register.html?curso=horticola" class="btn btn-primary btn-block mt-4">Pre-inscribirme</a>
+                        <h3 class="mt-2">Producción Hortícola y Cultivos Especializados</h3>
+                        <div class="course-cta">Ver Detalles &rarr;</div>
                     </div>
                 </div>
-                <div class="card course-card">
+                <div class="card course-card touch-target" data-course-id="hongos">
+                    <img src="img/curso-web.jpg" alt="Hongos" class="card-img">
                     <div class="card-content">
                         <span class="badge">Agro</span>
-                        <h3>Cultivador/a de Hongos Comestibles</h3>
-                        <a href="register.html?curso=hongos" class="btn btn-primary btn-block mt-4">Pre-inscribirme</a>
+                        <h3 class="mt-2">Cultivador/a de Hongos Comestibles</h3>
+                        <div class="course-cta">Ver Detalles &rarr;</div>
                     </div>
                 </div>
-                <div class="card course-card">
+                <div class="card course-card touch-target" data-course-id="textil">
+                    <img src="img/curso-diseno.jpg" alt="Textil" class="card-img">
                     <div class="card-content">
                         <span class="badge">Textil</span>
-                        <h3>Confección y Emprendimientos Textiles</h3>
-                        <a href="register.html?curso=textil" class="btn btn-primary btn-block mt-4">Pre-inscribirme</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Institucional -->
-    <section id="institucional" class="section">
-        <div class="container">
-            <h2 class="section-title">Quiénes Somos</h2>
-            <div class="institutional-content">
-                <div class="institutional-text">
-                    <p>El <strong>Centro de Formación Profesional N° 403 de Mercedes</strong> fue fundado el 24 de enero de 2023 bajo la <strong>Resolución RESOC-2023-111-GDEBA-DGCYE</strong>. Nuestra misión es formar operarios competentes, con las herramientas necesarias para el mundo de hoy, entendiendo el trabajo como un instrumento de dignificación humana.</p>
-                    <p>Actualmente contamos con una matrícula de más de 550 alumnos y funcionamos en dos locaciones estratégicas: nuestra <strong>Sede 1 (Calle 31 Nº 51)</strong> y la <strong>Sede Central (Calle 32 Nº 1220)</strong>. Trabajamos en profunda sinergia con talleres municipales y la economía social local para impulsar el desarrollo regional.</p>
-                    <a href="portfolio.html" class="btn btn-outline mt-2">Conoce el trabajo de nuestros alumnos</a>
-                </div>
-                <div class="institutional-gallery">
-                    <img src="img/practicas-1.jpg" alt="Prácticas en el taller" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MDAiIGhlaWdodD0iMjAwIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZTFlMWUxIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE4IiBmaWxsPSIjNjY2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5JbWFnZW4gUHLDoWN0aWNhczwvdGV4dD48L3N2Zz4='">
-                    <img src="img/practicas-2.jpg" alt="Alumnos en clase" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MDAiIGhlaWdodD0iMjAwIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZTFlMWUxIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE4IiBmaWxsPSIjNjY2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5JbWFnZW4gQ2xhc2VzPC90ZXh0Pjwvc3ZnPg=='">
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Convivencia Institucional (AIC) -->
-    <section id="aic" class="section bg-light">
-        <div class="container">
-            <h2 class="section-title">Acuerdo Institucional de Convivencia (AIC)</h2>
-            <div class="grid grid-2">
-                <div class="card">
-                    <div class="card-content">
-                        <h3 class="text-primary mb-2">⏱️ Asistencia y Puntualidad</h3>
-                        <p>Compromiso con la asistencia en tiempo y forma para aprovechar al máximo las horas de taller y respetar el tiempo de los instructores y compañeros.</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-content">
-                        <h3 class="text-primary mb-2">♻️ Uso Responsable</h3>
-                        <p>Promovemos el uso responsable y sostenible de insumos, herramientas y maquinaria en todos los talleres para garantizar la continuidad educativa.</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-content">
-                        <h3 class="text-primary mb-2">🧹 Orden y Limpieza</h3>
-                        <p>Mantener los espacios de trabajo limpios y ordenados es responsabilidad de todos, reflejando profesionalismo y cuidado por nuestro entorno.</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-content">
-                        <h3 class="text-primary mb-2">🤝 Resolución Pacífica</h3>
-                        <p>Fomentamos un ambiente de respeto mutuo, priorizando el diálogo, la empatía y la mediación pedagógica para la resolución de cualquier conflicto.</p>
+                        <h3 class="mt-2">Confección y Emprendimientos Textiles</h3>
+                        <div class="course-cta">Ver Detalles &rarr;</div>
                     </div>
                 </div>
             </div>
@@ -202,7 +218,7 @@
     <footer class="footer">
         <div class="container footer-grid">
             <div class="footer-col">
-                <a href="index.html" class="d-flex align-items-center mb-3" style="display: flex; align-items: center; gap: 12px; margin-bottom: 1rem;">
+                <a href="index.html" class="d-flex align-items-center mb-3 touch-target" style="display: flex; align-items: center; gap: 12px; margin-bottom: 1rem; width: fit-content;">
                     <img src="img/LOGO CFP 403 CHICO (1).png" alt="Logo CFP" style="height: 40px; border-radius: 4px;" onerror="this.style.display='none'">
                     <h3>CFP <span class="text-primary">N° 403</span></h3>
                 </a>
@@ -211,10 +227,9 @@
             <div class="footer-col">
                 <h4>Navegación</h4>
                 <ul>
-                    <li><a href="index.html">Inicio</a></li>
-                    <li><a href="#cursos">Trayectos Formativos</a></li>
-                    <li><a href="#institucional">Institucional</a></li>
-                    <li><a href="portfolio.html">Galería de Proyectos</a></li>
+                    <li><a href="index.html" class="touch-target">Inicio</a></li>
+                    <li><a href="#cursos" class="touch-target">Trayectos Formativos</a></li>
+                    <li><a href="portfolio.html" class="touch-target">Galería de Proyectos</a></li>
                 </ul>
             </div>
             <div class="footer-col">
@@ -222,27 +237,59 @@
                 <p>📍 Calle 32 N° 1220 entre 49 y 51, Mercedes</p>
                 <p>✉️ cfp403mercedes@abc.gob.ar</p>
                 <p class="mt-2">
-                    <a href="https://www.instagram.com/cfp_mercedes/" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; gap: 5px;">
+                    <a href="https://www.instagram.com/cfp_mercedes/" target="_blank" rel="noopener noreferrer" class="touch-target" style="display: inline-flex; align-items: center; gap: 5px;">
                         <span style="font-size: 1.2rem;">📷</span> Instagram Oficial
                     </a>
                 </p>
-                <a href="dashboard-admin.html" class="text-gray text-sm mt-3 d-inline-block">Acceso Dirección &rarr;</a>
+                <a href="dashboard-admin.html" class="text-gray text-sm mt-3 d-inline-block touch-target">Acceso Dirección &rarr;</a>
             </div>
         </div>
         
         <div class="container footer-banner">
-            <img src="img/1 - Horizontal.png" alt="Gobierno de la Provincia de Buenos Aires" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MDAiIGhlaWdodD0iMTAwIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMjIyIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE4IiBmaWxsPSIjODg4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5CYW5uZXIgR29iaWVybm8gUEJBUzwvdGV4dD48L3N2Zz4='">
+            <img src="img/1 - Horizontal.png" alt="Gobierno de la Provincia de Buenos Aires">
         </div>
 
         <div class="footer-bottom">
             <div class="container">
-                <p>&copy; 2024 Centro de Formación Profesional N° 403 de Mercedes. Todos los derechos reservados.</p>
+                <p>&copy; 2026 Centro de Formación Profesional N° 403 de Mercedes. Todos los derechos reservados.</p>
             </div>
         </div>
     </footer>
 
+    <!-- Slide-over Modal Ficha Técnica -->
+    <div id="course-slideover" class="slide-over-overlay">
+        <div class="slide-over-panel">
+            <div class="slide-over-header">
+                <h3 id="modal-title">Título del Curso</h3>
+                <button id="close-modal" class="touch-target close-btn" aria-label="Cerrar">&times;</button>
+            </div>
+            <div class="slide-over-body">
+                <img id="modal-img" src="" alt="Flyer del curso" class="modal-banner">
+                <div class="modal-info">
+                    <div class="info-row"><span class="icon">📍</span> <strong id="modal-sede">Sede Central</strong></div>
+                    <div class="info-row"><span class="icon">⏱️</span> <strong id="modal-duracion">1 Año</strong></div>
+                    <div class="info-row"><span class="icon">📅</span> <strong id="modal-horario">Lunes y Miércoles</strong></div>
+                </div>
+                <div class="modal-section">
+                    <h4>Perfil del Egresado</h4>
+                    <p id="modal-perfil" class="text-gray text-sm">Descripción del perfil...</p>
+                </div>
+                <div class="modal-section">
+                    <h4>Requisitos</h4>
+                    <ul id="modal-requisitos" class="text-gray text-sm modal-list">
+                        <li>DNI original y copia</li>
+                        <li>Estudios primarios completos</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="slide-over-footer">
+                <a href="#" id="modal-register-btn" class="btn btn-primary btn-block btn-large touch-target">Pre-inscribirme</a>
+            </div>
+        </div>
+    </div>
+
     <!-- Floating Instagram Button -->
-    <a href="https://www.instagram.com/cfp_mercedes/" target="_blank" rel="noopener noreferrer" class="floating-btn" aria-label="Síguenos en Instagram">
+    <a href="https://www.instagram.com/cfp_mercedes/" target="_blank" rel="noopener noreferrer" class="floating-btn touch-target" aria-label="Síguenos en Instagram">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
             <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
