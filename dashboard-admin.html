@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración | CFP N° 403</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        /* Estilos específicos del Dashboard integrados temporalmente o movidos a styles.css luego */
+        body { background-color: var(--color-bg); }
+        .dashboard-layout { display: flex; min-height: 100vh; }
+        .sidebar { width: 250px; background-color: var(--color-dark); color: white; padding: 2rem 1rem; }
+        .sidebar-logo { color: var(--color-primary); font-size: 1.5rem; font-weight: 700; margin-bottom: 2rem; text-align: center; }
+        .sidebar-menu { list-style: none; padding: 0; }
+        .sidebar-menu li { margin-bottom: 0.5rem; }
+        .sidebar-menu a { color: #ccc; text-decoration: none; padding: 0.75rem 1rem; display: block; border-radius: var(--border-radius); transition: all 0.2s; }
+        .sidebar-menu a:hover, .sidebar-menu a.active { background-color: rgba(0, 188, 212, 0.1); color: var(--color-primary); }
+        .main-content { flex: 1; padding: 2rem; overflow-y: auto; }
+        
+        .table-container { background: white; border-radius: var(--border-radius); box-shadow: var(--shadow-sm); overflow: hidden; margin-top: 2rem; }
+        .admin-table { width: 100%; border-collapse: collapse; }
+        .admin-table th, .admin-table td { padding: 1rem; text-align: left; border-bottom: 1px solid var(--color-border); }
+        .admin-table th { background-color: #f9fafb; font-weight: 600; color: var(--color-text-light); }
+        .admin-table tr:hover { background-color: #f9fafb; }
+        
+        .status-badge { padding: 0.25rem 0.75rem; border-radius: 999px; font-size: 0.875rem; font-weight: 500; }
+        .status-pending { background-color: #fef3c7; color: #92400e; }
+        .status-approved { background-color: #d1fae5; color: #065f46; }
+        
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); align-items: center; justify-content: center; z-index: 1000; }
+        .modal.active { display: flex; }
+        .modal-content { background: white; padding: 2rem; border-radius: var(--border-radius); width: 90%; max-width: 500px; }
+        .qr-placeholder { background: #f3f4f6; width: 200px; height: 200px; margin: 1rem auto; display: flex; align-items: center; justify-content: center; border: 2px dashed #d1d5db; border-radius: var(--border-radius); }
+    </style>
+</head>
+<body>
+    <div class="dashboard-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-logo">CFP 403 Admin</div>
+            <ul class="sidebar-menu">
+                <li><a href="#" class="active">Panel Principal</a></li>
+                <li><a href="#">Inscripciones</a></li>
+                <li><a href="#">Cursos</a></li>
+                <li><a href="#">Alumnos</a></li>
+                <li><a href="index.html">Volver a la Web</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="d-flex justify-content-between align-items-center mb-4">
+                <h2>Auditoría de Inscripciones</h2>
+                <div class="admin-profile">
+                    <span>Admin Dirección</span>
+                </div>
+            </header>
+
+            <div class="stats-grid grid grid-3">
+                <div class="card p-4 border-l-primary">
+                    <h3 class="text-gray text-sm">Nuevas Solicitudes</h3>
+                    <p class="text-3xl font-bold mt-2">12</p>
+                </div>
+                <div class="card p-4">
+                    <h3 class="text-gray text-sm">Total Inscriptos</h3>
+                    <p class="text-3xl font-bold mt-2">148</p>
+                </div>
+            </div>
+
+            <!-- Table -->
+            <div class="table-container">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>DNI</th>
+                            <th>Curso</th>
+                            <th>Documentación</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>#001</td>
+                            <td>Ana López</td>
+                            <td>35.444.333</td>
+                            <td>Desarrollo Web</td>
+                            <td><a href="#" class="text-primary" onclick="viewDocument('dni_ana.pdf')">Ver PDF DNI</a></td>
+                            <td><span class="status-badge status-pending">Pendiente</span></td>
+                            <td>
+                                <button class="btn btn-sm btn-primary" onclick="generateCarnet('35444333', 'Ana López')">Aprobar y Generar Carnet</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#002</td>
+                            <td>Carlos Ruiz</td>
+                            <td>40.111.222</td>
+                            <td>Diseño Gráfico</td>
+                            <td><a href="#" class="text-primary">Ver IMG DNI</a></td>
+                            <td><span class="status-badge status-approved">Aprobado</span></td>
+                            <td>
+                                <button class="btn btn-sm btn-outline">Ver Perfil</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal Generador de Carnet -->
+    <div class="modal" id="carnetModal">
+        <div class="modal-content text-center">
+            <h3>Carnet Virtual Generado</h3>
+            <p class="mt-2 text-gray" id="carnetName">Alumno: </p>
+            <div class="qr-placeholder">
+                <span class="text-gray">[ QR Code Hash DNI ]</span>
+            </div>
+            <p class="text-sm text-gray mb-4">Este código es único e irrepetible para el alumno.</p>
+            <button class="btn btn-primary" onclick="document.getElementById('carnetModal').classList.remove('active')">Cerrar</button>
+        </div>
+    </div>
+
+    <script>
+        // Simulador de funciones de admin
+        function viewDocument(docName) {
+            alert("Simulando visualizador seguro del documento: " + docName);
+        }
+
+        function generateCarnet(dni, nombre) {
+            document.getElementById('carnetName').innerText = "Alumno: " + nombre + " (DNI: " + dni + ")";
+            document.getElementById('carnetModal').classList.add('active');
+            
+            // Aquí iría el update vía fetch al backend para cambiar estado a Aprobado
+        }
+    </script>
+</body>
+</html>

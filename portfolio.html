@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio de Alumnos | CFP N° 403 Mercedes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="container nav-container">
+            <div class="logo">
+                <a href="index.html">
+                    <h1>CFP <span class="text-primary">403</span></h1>
+                </a>
+            </div>
+            <nav class="nav-links">
+                <a href="index.html">Inicio</a>
+                <a href="portfolio.html" class="active">Portfolio</a>
+                <a href="register.html" class="btn btn-primary">Inscribirse</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="section bg-light" style="min-height: 80vh;">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title">Trabajos Destacados de Alumnos</h2>
+                <p class="text-gray max-w-2xl mx-auto">Explora los increíbles proyectos reales creados por nuestros estudiantes durante su cursada. Una muestra del talento y la calidad de formación del CFP 403.</p>
+            </div>
+
+            <!-- Filtros de Portfolio -->
+            <div class="portfolio-filters text-center mb-4">
+                <button class="filter-btn active" data-filter="all">Todos</button>
+                <button class="filter-btn" data-filter="web">Desarrollo Web</button>
+                <button class="filter-btn" data-filter="diseno">Diseño Gráfico</button>
+                <button class="filter-btn" data-filter="videojuegos">Videojuegos</button>
+            </div>
+
+            <!-- Galería -->
+            <div class="grid grid-3" id="portfolioGallery">
+                <!-- Item 1 -->
+                <div class="portfolio-item card" data-category="web">
+                    <div class="card-image bg-tech-1" style="height: 200px;"></div>
+                    <div class="card-content">
+                        <span class="badge">Desarrollo Web</span>
+                        <h3>E-commerce "Mercado Local"</h3>
+                        <p class="text-sm text-gray mb-3">Por: Equipo 4 (2023)</p>
+                        <p>Plataforma de ventas online para emprendedores de Mercedes desarrollada en React y Node.js.</p>
+                        <a href="#" class="btn btn-outline btn-sm mt-3">Ver Proyecto</a>
+                    </div>
+                </div>
+
+                <!-- Item 2 -->
+                <div class="portfolio-item card" data-category="diseno">
+                    <div class="card-image bg-tech-2" style="height: 200px;"></div>
+                    <div class="card-content">
+                        <span class="badge">Diseño Gráfico</span>
+                        <h3>Identidad Visual "EcoHuerta"</h3>
+                        <p class="text-sm text-gray mb-3">Por: Sofía Martínez</p>
+                        <p>Rediseño de marca, manual de estilo y piezas gráficas para redes sociales para un proyecto sustentable local.</p>
+                        <a href="#" class="btn btn-outline btn-sm mt-3">Ver Proyecto</a>
+                    </div>
+                </div>
+
+                <!-- Item 3 -->
+                <div class="portfolio-item card" data-category="videojuegos">
+                    <div class="card-image bg-tech-3" style="height: 200px;"></div>
+                    <div class="card-content">
+                        <span class="badge">Videojuegos</span>
+                        <h3>Juego 2D "Aventura en la Pampa"</h3>
+                        <p class="text-sm text-gray mb-3">Por: Lucas Gómez</p>
+                        <p>Plataformero pixel art desarrollado en Unity con mecánicas clásicas e historia regional.</p>
+                        <a href="#" class="btn btn-outline btn-sm mt-3">Ver Proyecto</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer Simple -->
+    <footer class="footer">
+        <div class="container text-center">
+            <p>&copy; 2024 CFP 403 Mercedes. <a href="index.html" class="text-primary">Volver al Inicio</a></p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

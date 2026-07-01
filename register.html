@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pre-inscripción | CFP N° 403 Mercedes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-light">
+    <!-- Navbar (Simplificada para registro) -->
+    <header class="navbar">
+        <div class="container nav-container">
+            <div class="logo">
+                <a href="index.html">
+                    <h1>CFP <span class="text-primary">403</span></h1>
+                </a>
+            </div>
+            <nav class="nav-links">
+                <a href="index.html">Volver al Inicio</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="section">
+        <div class="container">
+            <div class="form-wrapper card">
+                <div class="form-header text-center">
+                    <h2>Pre-inscripción a Cursos</h2>
+                    <p>Completa el formulario con tus datos reales para reservar tu vacante.</p>
+                </div>
+
+                <form id="registerForm" class="register-form" novalidate>
+                    <div class="form-row grid grid-2">
+                        <div class="form-group">
+                            <label for="nombre">Nombre Completo <span class="text-danger">*</span></label>
+                            <input type="text" id="nombre" name="nombre" class="form-control" required placeholder="Ej: Juan Pérez">
+                            <span class="error-msg" id="nombreError"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="dni">Número de DNI <span class="text-danger">*</span></label>
+                            <input type="number" id="dni" name="dni" class="form-control" required placeholder="Sin puntos ni espacios">
+                            <span class="error-msg" id="dniError"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Correo Electrónico <span class="text-danger">*</span></label>
+                        <input type="email" id="email" name="email" class="form-control" required placeholder="tu@email.com">
+                        <span class="error-msg" id="emailError"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="curso">Curso de Interés <span class="text-danger">*</span></label>
+                        <select id="curso" name="curso" class="form-control" required>
+                            <option value="">Selecciona un curso...</option>
+                            <option value="web">Desarrollo Web Full Stack</option>
+                            <option value="diseno">Diseño Gráfico Digital</option>
+                            <option value="videojuegos">Desarrollo de Videojuegos</option>
+                            <option value="reparacion">Reparación de PC</option>
+                        </select>
+                        <span class="error-msg" id="cursoError"></span>
+                    </div>
+
+                    <div class="form-group file-upload-group">
+                        <label for="dniArchivo">Frente y Dorso del DNI (PDF o Imagen) <span class="text-danger">*</span></label>
+                        <div class="file-drop-area" id="fileDropArea">
+                            <span class="file-msg">Arrastra tu archivo aquí o haz clic para subir</span>
+                            <input type="file" id="dniArchivo" name="dniArchivo" class="file-input" accept=".pdf,image/*" required>
+                        </div>
+                        <p class="text-sm text-gray mt-1" id="fileNameDisplay">Ningún archivo seleccionado.</p>
+                        <span class="error-msg" id="archivoError"></span>
+                    </div>
+
+                    <div class="form-actions mt-4">
+                        <button type="submit" class="btn btn-primary btn-block btn-large" id="submitBtn">
+                            <span class="btn-text">Confirmar Pre-inscripción</span>
+                            <span class="loader hidden"></span>
+                        </button>
+                    </div>
+
+                    <div id="formSuccess" class="alert alert-success hidden mt-3">
+                        ¡Pre-inscripción exitosa! Hemos recibido tus datos y los estamos evaluando.
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
