@@ -68,75 +68,14 @@
         </div>
     </main>
 
-    <script src="js/auth.js?v=1"></script>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage-compat.js"></script>
+    <script src="js/firebase-config.js?v=3"></script>
+    
+    <script src="js/auth.js?v=3"></script>
     <script src="js/cursos.js?v=1"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const currentUser = DB.getCurrentUser();
-            if (!currentUser) {
-                window.location.href = 'login.html';
-                return;
-            }
-
-            // Llenar formulario de perfil
-            document.getElementById('prof-dni').value = currentUser.dni;
-            document.getElementById('prof-nombres').value = currentUser.nombres;
-            document.getElementById('prof-email').value = currentUser.email;
-            document.getElementById('prof-telefono').value = currentUser.telefono;
-
-            // Guardar cambios
-            document.getElementById('profile-form').addEventListener('submit', (e) => {
-                e.preventDefault();
-                const users = DB.getUsers();
-                users[currentUser.dni].nombres = document.getElementById('prof-nombres').value;
-                users[currentUser.dni].email = document.getElementById('prof-email').value;
-                users[currentUser.dni].telefono = document.getElementById('prof-telefono').value;
-                DB.saveUsers(users);
-                alert('Datos actualizados exitosamente.');
-            });
-
-            // Cerrar Sesión
-            document.getElementById('logout-btn').addEventListener('click', (e) => {
-                e.preventDefault();
-                DB.logout();
-                window.location.href = 'index.html';
-            });
-
-            // Mostrar Cursos Inscritos (utiliza coursesData de cursos.js que debe estar cargado)
-            const container = document.getElementById('my-courses-container');
-            const noCourses = document.getElementById('no-courses-msg');
-
-            // Necesitamos acceder a la data de cursos, exportémosla globalmente en cursos.js si no lo está.
-            // Para la maqueta, haremos un intervalo rápido para asegurar que coursesData exista en window
-            const renderCourses = () => {
-                if (window.cfpCoursesData) {
-                    const enrolled = currentUser.cursos || [];
-                    if (enrolled.length === 0) {
-                        noCourses.style.display = 'block';
-                    } else {
-                        enrolled.forEach(cId => {
-                            const data = window.cfpCoursesData[cId];
-                            if(data) {
-                                const el = document.createElement('div');
-                                el.className = 'card course-card';
-                                el.innerHTML = `
-                                    <div class="card-content">
-                                        <span class="badge mb-2 bg-success">Pre-Inscripto</span>
-                                        <h3>${data.title}</h3>
-                                        <p class="text-sm text-gray mt-2">📍 ${data.sede}</p>
-                                        <p class="text-sm text-gray">📅 ${data.horario}</p>
-                                    </div>
-                                `;
-                                container.appendChild(el);
-                            }
-                        });
-                    }
-                } else {
-                    setTimeout(renderCourses, 50);
-                }
-            };
-            renderCourses();
-        });
-    </script>
 </body>
 </html>

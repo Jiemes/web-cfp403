@@ -135,25 +135,35 @@ document.addEventListener('DOMContentLoaded', () => {
             const newCtaBtn = ctaBtn.cloneNode(true);
             ctaBtn.parentNode.replaceChild(newCtaBtn, ctaBtn);
             
-            newCtaBtn.addEventListener('click', (e) => {
+            newCtaBtn.addEventListener('click', async (e) => {
                 e.preventDefault();
                 
-                // Chequear auth
-                const userDni = localStorage.getItem('cfp_current_user');
-                if (userDni) {
+                // Chequear auth mediante Firebase
+                const user = window.authFirebase ? window.authFirebase.currentUser : null;
+                
+                if (user) {
                     // Usuario logueado: confirmar inscripción
                     if(confirm(`¿Estás seguro de que quieres anotarte en ${data.title}?`)) {
-                        const users = JSON.parse(localStorage.getItem('cfp_users') || '{}');
-                        const user = users[userDni];
-                        
-                        if(!user.cursos.includes(courseId)) {
-                            user.cursos.push(courseId);
-                            localStorage.setItem('cfp_users', JSON.stringify(users));
-                            alert('¡Pre-inscripción confirmada! Revisa tu panel.');
-                            window.location.href = 'profile.html';
-                        } else {
-                            alert('Ya estás inscripto en este curso.');
-                            window.location.href = 'profile.html';
+                        try {
+                            const userRef = window.db.collection('users').doc(user.uid);
+                            const doc = await userRef.get();
+                            if(doc.exists) {
+                                const userData = doc.data();
+                                const currentCursos = userData.cursos || [];
+                                
+                                if(!currentCursos.includes(courseId)) {
+                                    currentCursos.push(courseId);
+                                    await userRef.update({ cursos: currentCursos });
+                                    alert('¡Pre-inscripción confirmada! Revisa tu panel.');
+                                    window.location.href = 'profile.html';
+                                } else {
+                                    alert('Ya estás inscripto en este curso.');
+                                    window.location.href = 'profile.html';
+                                }
+                            }
+                        } catch (error) {
+                            console.error("Error al inscribir:", error);
+                            alert("Hubo un error al procesar tu inscripción.");
                         }
                     }
                 } else {

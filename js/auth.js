@@ -1,20 +1,8 @@
 /**
- * auth.js - Módulo de Autenticación Simulada (LocalStorage)
- * Maneja el registro de usuarios, inicio de sesión y pre-inscripciones.
+ * auth.js - Módulo de Autenticación con Firebase
  */
 
-// Helper para acceder a la base de datos simulada
-const DB = {
-    getUsers: () => JSON.parse(localStorage.getItem('cfp_users') || '{}'),
-    saveUsers: (users) => localStorage.setItem('cfp_users', JSON.stringify(users)),
-    getCurrentUser: () => {
-        const dni = localStorage.getItem('cfp_current_user');
-        if (!dni) return null;
-        return DB.getUsers()[dni] || null;
-    },
-    login: (dni) => localStorage.setItem('cfp_current_user', dni),
-    logout: () => localStorage.removeItem('cfp_current_user'),
-};
+const AUTH_DOMAIN_SUFFIX = "@login.cfp403.edu.ar";
 
 // ==============================================
 // 1. Funciones de Sanitización y Formateo
@@ -24,6 +12,7 @@ function capitalizeNames(str) {
 }
 
 function sanitizeDNI(inputElement) {
+    if (!inputElement) return;
     inputElement.addEventListener('input', (e) => {
         e.target.value = e.target.value.replace(/[^0-9]/g, '');
     });
@@ -38,7 +27,6 @@ function initStepper() {
     
     if (nextBtn && prevBtn) {
         nextBtn.addEventListener('click', () => {
-            // Validación básica del Paso 1 antes de avanzar
             const requiredFields = ['email', 'nombres', 'dni', 'ciudad_res', 'direccion', 'telefono', 'estudios'];
             let valid = true;
             requiredFields.forEach(id => {
@@ -79,7 +67,7 @@ function initRegister() {
     const nombresInput = document.getElementById('nombres');
     const form = document.getElementById('register-form');
 
-    if (dniInput) sanitizeDNI(dniInput);
+    sanitizeDNI(dniInput);
     
     if (nombresInput) {
         nombresInput.addEventListener('blur', (e) => {
@@ -88,7 +76,7 @@ function initRegister() {
     }
 
     if (form) {
-        form.addEventListener('submit', (e) => {
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
             
             const dni = dniInput.value;
@@ -100,44 +88,49 @@ function initRegister() {
                 return;
             }
 
-            const users = DB.getUsers();
-            if (users[dni]) {
-                alert('Ya existe una cuenta con ese DNI. Inicia sesión.');
-                window.location.href = 'login.html';
-                return;
-            }
+            // Crear email sintético para Auth
+            const authEmail = `${dni}${AUTH_DOMAIN_SUFFIX}`;
+            const realEmail = document.getElementById('email').value;
 
-            // Guardar usuario
-            users[dni] = {
-                dni: dni,
-                email: document.getElementById('email').value,
-                nombres: nombresInput.value,
-                password: pass1, // En producción real se hashea
-                ciudad_res: document.getElementById('ciudad_res').value,
-                direccion: document.getElementById('direccion').value,
-                telefono: document.getElementById('telefono').value,
-                nacionalidad: document.getElementById('nacionalidad').value,
-                ciudad_nac: document.getElementById('ciudad_nac').value,
-                estudios: document.getElementById('estudios').value,
-                trabajo: document.getElementById('trabajo').value || 'NO',
-                salud: document.getElementById('salud').value || 'NO',
-                cursos: [] // Array de IDs de cursos
-            };
+            try {
+                // 1. Crear usuario en Firebase Auth
+                const userCredential = await authFirebase.createUserWithEmailAndPassword(authEmail, pass1);
+                const user = userCredential.user;
 
-            DB.saveUsers(users);
-            
-            // Auto login
-            DB.login(dni);
-            
-            // Redirigir a profile o mantener en curso
-            alert('¡Registro exitoso! Bienvenido al CFP 403.');
-            
-            // Si venía de querer anotarse a un curso
-            const urlParams = new URLSearchParams(window.location.search);
-            if(urlParams.get('curso')) {
-                window.location.href = `index.html?enroll=${urlParams.get('curso')}`;
-            } else {
-                window.location.href = 'profile.html';
+                // 2. Guardar datos en Firestore
+                await db.collection('users').doc(user.uid).set({
+                    dni: dni,
+                    email: realEmail,
+                    nombres: nombresInput.value,
+                    ciudad_res: document.getElementById('ciudad_res').value,
+                    direccion: document.getElementById('direccion').value,
+                    telefono: document.getElementById('telefono').value,
+                    nacionalidad: document.getElementById('nacionalidad').value,
+                    ciudad_nac: document.getElementById('ciudad_nac').value,
+                    estudios: document.getElementById('estudios').value,
+                    trabajo: document.getElementById('trabajo').value || 'NO',
+                    salud: document.getElementById('salud').value || 'NO',
+                    cursos: [], // Array de IDs de cursos
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+
+                alert('¡Registro exitoso! Bienvenido al CFP 403.');
+                
+                const urlParams = new URLSearchParams(window.location.search);
+                if(urlParams.get('curso')) {
+                    window.location.href = `index.html?enroll=${urlParams.get('curso')}`;
+                } else {
+                    window.location.href = 'profile.html';
+                }
+
+            } catch (error) {
+                console.error("Error en registro:", error);
+                if (error.code === 'auth/email-already-in-use') {
+                    alert('Ya existe una cuenta con ese DNI. Inicia sesión.');
+                    window.location.href = 'login.html';
+                } else {
+                    alert('Error al registrar: ' + error.message);
+                }
             }
         });
     }
@@ -148,60 +141,142 @@ function initRegister() {
 // ==============================================
 function initLogin() {
     const form = document.getElementById('login-form');
-    const forgotBtn = document.getElementById('forgot-password-btn');
-    const recoverModal = document.getElementById('recover-modal');
     
     if (form) {
         const dniInput = document.getElementById('login-dni');
         sanitizeDNI(dniInput);
 
-        form.addEventListener('submit', (e) => {
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
             const dni = dniInput.value;
             const pass = document.getElementById('login-password').value;
+            const authEmail = `${dni}${AUTH_DOMAIN_SUFFIX}`;
             
-            const users = DB.getUsers();
-            if (users[dni] && users[dni].password === pass) {
-                DB.login(dni);
+            try {
+                await authFirebase.signInWithEmailAndPassword(authEmail, pass);
                 window.location.href = 'profile.html';
-            } else {
+            } catch (error) {
+                console.error("Error en login:", error);
                 alert('DNI o contraseña incorrectos.');
             }
-        });
-    }
-
-    if (forgotBtn && recoverModal) {
-        forgotBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            recoverModal.classList.add('active');
-        });
-
-        document.getElementById('close-recover')?.addEventListener('click', () => {
-            recoverModal.classList.remove('active');
-        });
-
-        document.getElementById('recover-form')?.addEventListener('submit', (e) => {
-            e.preventDefault();
-            alert('Se ha enviado un enlace de recuperación a tu correo electrónico.');
-            recoverModal.classList.remove('active');
         });
     }
 }
 
 // ==============================================
-// 5. Estado Global y Navbar UI (Todas las vistas)
+// 5. Perfil de Usuario (profile.html)
+// ==============================================
+function initProfile() {
+    const profileForm = document.getElementById('profile-form');
+    if (!profileForm) return;
+
+    authFirebase.onAuthStateChanged(async (user) => {
+        if (!user) {
+            window.location.href = 'login.html';
+            return;
+        }
+
+        try {
+            // Cargar datos del usuario
+            const doc = await db.collection('users').doc(user.uid).get();
+            if (doc.exists) {
+                const userData = doc.data();
+                document.getElementById('prof-dni').value = userData.dni;
+                document.getElementById('prof-nombres').value = userData.nombres;
+                document.getElementById('prof-email').value = userData.email;
+                document.getElementById('prof-telefono').value = userData.telefono;
+
+                // Renderizar cursos inscriptos
+                renderEnrolledCourses(userData.cursos || []);
+            }
+        } catch (error) {
+            console.error("Error cargando perfil:", error);
+        }
+    });
+
+    profileForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const user = authFirebase.currentUser;
+        if (!user) return;
+
+        try {
+            await db.collection('users').doc(user.uid).update({
+                nombres: document.getElementById('prof-nombres').value,
+                email: document.getElementById('prof-email').value,
+                telefono: document.getElementById('prof-telefono').value
+            });
+            alert('Datos actualizados exitosamente.');
+        } catch (error) {
+            console.error("Error actualizando perfil:", error);
+            alert('Hubo un error al actualizar los datos.');
+        }
+    });
+
+    const logoutBtn = document.getElementById('logout-btn');
+    if(logoutBtn) {
+        logoutBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            authFirebase.signOut().then(() => {
+                window.location.href = 'index.html';
+            });
+        });
+    }
+}
+
+function renderEnrolledCourses(enrolledIds) {
+    const container = document.getElementById('my-courses-container');
+    const noCourses = document.getElementById('no-courses-msg');
+    
+    if (!container || !noCourses) return;
+
+    const tryRender = () => {
+        if (window.cfpCoursesData) {
+            if (enrolledIds.length === 0) {
+                noCourses.style.display = 'block';
+                container.innerHTML = '';
+            } else {
+                noCourses.style.display = 'none';
+                container.innerHTML = '';
+                enrolledIds.forEach(cId => {
+                    const data = window.cfpCoursesData[cId];
+                    if(data) {
+                        const el = document.createElement('div');
+                        el.className = 'card course-card';
+                        el.innerHTML = `
+                            <div class="card-content">
+                                <span class="badge mb-2 bg-success">Pre-Inscripto</span>
+                                <h3>${data.title}</h3>
+                                <p class="text-sm text-gray mt-2">📍 ${data.sede}</p>
+                                <p class="text-sm text-gray">📅 ${data.horario}</p>
+                            </div>
+                        `;
+                        container.appendChild(el);
+                    }
+                });
+            }
+        } else {
+            // Reintentar si cursos.js aún no cargó la data global
+            setTimeout(tryRender, 100);
+        }
+    };
+    tryRender();
+}
+
+
+// ==============================================
+// 6. Estado Global y Navbar UI (index.html)
 // ==============================================
 function initGlobalAuth() {
-    const currentUser = DB.getCurrentUser();
     const navBtnContainer = document.getElementById('auth-nav-btn');
+    if (!navBtnContainer) return;
 
-    if (navBtnContainer) {
-        if (currentUser) {
+    authFirebase.onAuthStateChanged((user) => {
+        if (user) {
             navBtnContainer.innerHTML = `<a href="profile.html" class="btn btn-outline touch-target">Mi Perfil</a>`;
         } else {
             navBtnContainer.innerHTML = `<a href="login.html" class="btn btn-gradient touch-target">Iniciar Sesión</a>`;
         }
-    }
+    });
 }
 
 // Inicializadores
@@ -210,4 +285,5 @@ document.addEventListener('DOMContentLoaded', () => {
     initStepper();
     initRegister();
     initLogin();
+    initProfile();
 });
