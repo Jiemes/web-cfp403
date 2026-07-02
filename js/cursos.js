@@ -7,17 +7,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const coursesData = {
         'ia': {
-            title: 'Habilidades Digitales e Inteligencia Artificial',
+            title: 'en Habilidades Digitales e I.A.',
             img: 'img/curso-web.jpg',
             sede: 'Sede Central (Calle 32)',
             duracion: '1 Cuatrimestre',
             horario: 'Mar y Jue, 18:00 a 21:00',
-            perfil: 'Aprenderás a integrar herramientas de IA (ChatGPT, Midjourney) en flujos de trabajo diarios, automatizar tareas y dominar competencias digitales clave para el empleo moderno.',
+            perfil: 'Aprenderás a integrar herramientas de IA en flujos de trabajo diarios, automatizar tareas y dominar competencias digitales clave.',
             requisitos: ['DNI y fotocopia', 'Estudios primarios completos', 'Conocimientos básicos de PC'],
             highlight: null
         },
         'marketing': {
-            title: 'Diseño y Marketing Digital',
+            title: 'en Diseño Gráfico y Marketing Digital',
             img: 'img/curso-diseno.jpg',
             sede: 'Sede Central (Calle 32)',
             duracion: '1 Año',
@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
             highlight: null
         },
         'software': {
-            title: 'Desarrollo de Software y Videojuegos',
+            title: 'en Desarrollo de Software y Videojuegos',
             img: 'img/programacion.jpg',
             sede: 'Sede Central (Calle 32)',
             duracion: 'Inicia el 2 de marzo y finaliza el 15 de diciembre',
@@ -36,58 +36,18 @@ document.addEventListener('DOMContentLoaded', () => {
             requisitos: ['Mayor de 16 años', 'Estudios secundarios finalizados o en curso'],
             highlight: 'La integración de Programación en Python, Construcción de Bases de Datos, Diseño y Programación de Videojuegos, e Incorporación de herramientas de Inteligencia Artificial.'
         },
-        'ingles': {
-            title: 'Inglés Aplicado al Mundo Digital',
+        'web': {
+            title: 'en Desarrollo Web y Mobile',
             img: 'img/curso-web.jpg',
-            sede: 'Sede 1 (Calle 31)',
-            duracion: '1 Año',
-            horario: 'Sábados, 09:00 a 13:00',
-            perfil: 'Inglés técnico focalizado en la interpretación de documentación de software, interfaces de usuario y comunicación en entornos IT globales.',
-            requisitos: ['DNI y fotocopia'],
-            highlight: null
-        },
-        'comedor': {
-            title: 'Cocinero/a para Comedor Escolar',
-            img: 'img/curso-diseno.jpg',
-            sede: 'Sede 1 (Calle 31)',
-            duracion: '1 Año',
-            horario: 'Lun y Mié, 14:00 a 17:30',
-            perfil: 'Preparación de menús masivos equilibrados, cumplimiento estricto de normas de bromatología e higiene, y gestión de raciones para instituciones educativas.',
-            requisitos: ['DNI y fotocopia', 'Libreta Sanitaria'],
-            highlight: null
-        },
-        'pastas': {
-            title: 'Elaborador/a de Pastas Saludables',
-            img: 'img/curso-diseno.jpg',
-            sede: 'Sede 1 (Calle 31)',
-            duracion: '1 Cuatrimestre',
-            horario: 'Mar y Jue, 14:00 a 17:00',
-            perfil: 'Técnicas de elaboración artesanal de pastas frescas secas y rellenas incorporando vegetales, harinas alternativas y principios nutricionales.',
-            requisitos: ['DNI y fotocopia', 'Libreta Sanitaria'],
-            highlight: null
-        },
-        'eventos': {
-            title: 'Organizador/a de Eventos',
-            img: 'img/curso-diseno.jpg',
             sede: 'Sede Central (Calle 32)',
-            duracion: '1 Cuatrimestre',
-            horario: 'Viernes, 17:00 a 21:00',
-            perfil: 'Planificación, presupuesto, protocolo y coordinación logística integral para eventos corporativos y sociales.',
-            requisitos: ['DNI y fotocopia'],
-            highlight: null
-        },
-        'limpieza': {
-            title: 'Limpieza Institucional',
-            img: 'img/curso-diseno.jpg',
-            sede: 'Sede 1 (Calle 31)',
-            duracion: '1 Cuatrimestre',
-            horario: 'Lun y Mié, 09:00 a 12:00',
-            perfil: 'Manejo de productos domisanitarios, protocolos de desinfección en hospitales, escuelas y oficinas gubernamentales, y bioseguridad.',
-            requisitos: ['DNI y fotocopia'],
+            duracion: '1 Año',
+            horario: 'Mar y Jue, 18:00 a 21:00',
+            perfil: 'Creación de aplicaciones web y móviles modernas utilizando las últimas tecnologías y frameworks del mercado.',
+            requisitos: ['DNI y fotocopia', 'Estudios secundarios (en curso o completos)'],
             highlight: null
         },
         'horticola': {
-            title: 'Producción Hortícola y Cultivos',
+            title: 'en Producción Hortícola y Cultivos Especializados',
             img: 'img/curso-web.jpg',
             sede: 'Vivero Municipal (Prácticas)',
             duracion: '1 Año',
@@ -96,24 +56,34 @@ document.addEventListener('DOMContentLoaded', () => {
             requisitos: ['DNI y fotocopia'],
             highlight: null
         },
-        'hongos': {
-            title: 'Cultivador/a de Hongos Comestibles',
-            img: 'img/curso-web.jpg',
-            sede: 'Sede 1 (Calle 31)',
-            duracion: '1 Cuatrimestre',
-            horario: 'Viernes, 14:00 a 17:00',
-            perfil: 'Técnicas de inoculación, incubación y fructificación de gírgolas y otros hongos comestibles sobre sustratos reciclados (economía circular).',
-            requisitos: ['DNI y fotocopia'],
-            highlight: null
-        },
         'textil': {
-            title: 'Confección y Emprendimientos Textiles',
+            title: 'en Confección y Emprendimientos Textiles',
             img: 'img/curso-diseno.jpg',
             sede: 'Sede 1 (Calle 31)',
             duracion: '1 Año',
             horario: 'Lun y Mié, 14:00 a 17:30',
-            perfil: 'Manejo de máquinas de coser industriales (recta, overlock), moldería básica, corte y estrategias para lanzar tu propia marca de ropa o uniformes.',
+            perfil: 'Manejo de máquinas de coser industriales, moldería básica, corte y estrategias para lanzar tu propia marca de ropa o uniformes.',
             requisitos: ['DNI y fotocopia'],
+            highlight: null
+        },
+        'eventos': {
+            title: 'en Organización de Eventos',
+            img: 'img/curso-diseno.jpg',
+            sede: 'Sede Central (Calle 32)',
+            duracion: '1 Cuatrimestre',
+            horario: 'Viernes, 17:00 a 21:00',
+            perfil: 'Planificación, presupuesto, protocolo y coordinación logística integral para eventos corporativos y sociales.',
+            requisitos: ['DNI y fotocopia'],
+            highlight: null
+        },
+        'gastronomia': {
+            title: 'en Gastronomía',
+            img: 'img/curso-diseno.jpg',
+            sede: 'Sede 1 (Calle 31)',
+            duracion: '1 Año',
+            horario: 'Mar y Jue, 14:00 a 17:30',
+            perfil: 'Técnicas culinarias profesionales, manejo seguro de alimentos, pastelería y planificación de menú.',
+            requisitos: ['DNI y fotocopia', 'Libreta Sanitaria'],
             highlight: null
         }
     };
