@@ -239,7 +239,10 @@ img {
 .hero-title { font-size: 3.5rem; font-weight: 800; line-height: 1.2; margin-bottom: 1.5rem; letter-spacing: -0.03em;}
 .hero-subtitle { font-size: 1.125rem; color: rgba(255,255,255,0.8); margin: 0 auto 2.5rem; max-width: 600px; }
 
-/* Typewriter Cursor */
+/* Typewriter Cursor & Text */
+.typewriter-text, .typewriter-cursor {
+    font-size: 2.4rem;
+}
 .typewriter-cursor {
     animation: blink 0.8s infinite;
     color: var(--color-primary);
@@ -566,6 +569,7 @@ img {
 
 @media (max-width: 768px) {
     .hero-title { font-size: 2.5rem; }
+    .typewriter-text, .typewriter-cursor { font-size: 1.5rem; }
     .nav-links {
         display: none;
         position: absolute;
