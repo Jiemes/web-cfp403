@@ -195,8 +195,24 @@ function initProfile() {
                 document.getElementById('prof-email').value = userData.email;
                 document.getElementById('prof-telefono').value = userData.telefono;
 
-                // Renderizar cursos inscriptos
-                renderEnrolledCourses(userData.cursos || []);
+                const userRole = userData.rol || 'alumno';
+                
+                // Adaptar UI según rol
+                if (userRole === 'instructor') {
+                    document.getElementById('portal-role-title').textContent = 'Docente';
+                    document.querySelectorAll('.alumno-only').forEach(el => el.style.display = 'none');
+                    document.querySelectorAll('.instructor-only').forEach(el => el.style.display = 'block');
+                    document.getElementById('main-courses-title').textContent = 'Mis Aulas Asignadas';
+                    // Renderizar aulas asignadas al docente
+                    renderInstructorCourses(user.uid);
+                } else {
+                    document.getElementById('portal-role-title').textContent = 'del Alumno';
+                    document.querySelectorAll('.alumno-only').forEach(el => el.style.display = 'block');
+                    document.querySelectorAll('.instructor-only').forEach(el => el.style.display = 'none');
+                    document.getElementById('main-courses-title').textContent = 'Mis Cursos y Aulas';
+                    // Renderizar cursos inscriptos del alumno
+                    renderEnrolledCourses(userData.cursos || []);
+                }
             }
         } catch (error) {
             console.error("Error cargando perfil:", error);
@@ -233,44 +249,127 @@ function initProfile() {
     }
 }
 
-function renderEnrolledCourses(enrolledIds) {
+async function renderEnrolledCourses(enrolledIds) {
+    const container = document.getElementById('my-courses-container');
+    const noCourses = document.getElementById('no-courses-msg');
+    
+    if (!container || !noCourses) return;
+    
+    if (!enrolledIds || enrolledIds.length === 0) {
+        noCourses.style.display = 'block';
+        container.innerHTML = '';
+        return;
+    }
+
+    noCourses.style.display = 'none';
+    container.innerHTML = '';
+    
+    const today = new Date();
+
+    for (const cId of enrolledIds) {
+        try {
+            const doc = await window.db.collection('cursos').doc(cId).get();
+            if (doc.exists) {
+                const data = doc.data();
+                
+                // Verificar expiración (si hay fecha_fin y ya pasó)
+                if (data.fecha_fin) {
+                    const endDate = new Date(data.fecha_fin);
+                    if (endDate < today) {
+                        continue; // Curso vencido, no lo renderiza en el dashboard activo
+                    }
+                }
+
+                const el = document.createElement('div');
+                el.className = 'card course-card';
+                el.style.display = 'flex';
+                el.style.flexDirection = 'column';
+                el.innerHTML = `
+                    <div class="card-content" style="flex: 1;">
+                        <span class="badge mb-2 bg-success">Inscripto / Activo</span>
+                        <h3>${data.title}</h3>
+                        <p class="text-sm text-gray mt-2">📍 ${data.sede}</p>
+                        <p class="text-sm text-gray">🚀 Inicio: ${data.fecha_inicio || 'A definir'}</p>
+                    </div>
+                    <div style="padding: 1rem; border-top: 1px solid var(--color-border); display: flex; gap: 0.5rem;">
+                        <a href="#" class="btn btn-primary btn-sm touch-target" style="flex: 1; text-align: center;">Ir al Aula</a>
+                        <button class="btn btn-outline btn-sm touch-target" style="color: var(--color-danger); border-color: var(--color-danger);" onclick="dropCourse('${cId}')">Baja</button>
+                    </div>
+                `;
+                container.appendChild(el);
+            }
+        } catch (error) {
+            console.error("Error cargando curso inscripto", error);
+        }
+    }
+    
+    // Si todos estaban vencidos y no se renderizó nada
+    if (container.children.length === 0) {
+        noCourses.style.display = 'block';
+    }
+}
+
+async function renderInstructorCourses(instructorUid) {
     const container = document.getElementById('my-courses-container');
     const noCourses = document.getElementById('no-courses-msg');
     
     if (!container || !noCourses) return;
 
-    const tryRender = () => {
-        if (window.cfpCoursesData) {
-            if (enrolledIds.length === 0) {
-                noCourses.style.display = 'block';
-                container.innerHTML = '';
-            } else {
-                noCourses.style.display = 'none';
-                container.innerHTML = '';
-                enrolledIds.forEach(cId => {
-                    const data = window.cfpCoursesData[cId];
-                    if(data) {
-                        const el = document.createElement('div');
-                        el.className = 'card course-card';
-                        el.innerHTML = `
-                            <div class="card-content">
-                                <span class="badge mb-2 bg-success">Inscripto</span>
-                                <h3>${data.title}</h3>
-                                <p class="text-sm text-gray mt-2">📍 ${data.sede}</p>
-                                <p class="text-sm text-gray">📅 ${data.horario}</p>
-                            </div>
-                        `;
-                        container.appendChild(el);
-                    }
-                });
-            }
-        } else {
-            // Reintentar si cursos.js aún no cargó la data global
-            setTimeout(tryRender, 100);
+    try {
+        const snapshot = await window.db.collection('cursos').where('instructor_id', '==', instructorUid).get();
+        
+        if (snapshot.empty) {
+            noCourses.style.display = 'block';
+            container.innerHTML = '';
+            return;
         }
-    };
-    tryRender();
+
+        noCourses.style.display = 'none';
+        container.innerHTML = '';
+
+        snapshot.forEach(doc => {
+            const data = doc.data();
+            const el = document.createElement('div');
+            el.className = 'card course-card';
+            el.style.display = 'flex';
+            el.style.flexDirection = 'column';
+            el.innerHTML = `
+                <div class="card-content" style="flex: 1;">
+                    <span class="badge mb-2 bg-primary">Docente a cargo</span>
+                    <h3>${data.title}</h3>
+                    <p class="text-sm text-gray mt-2">📍 ${data.sede}</p>
+                    <p class="text-sm text-gray">🚀 Inicio: ${data.fecha_inicio || 'A definir'}</p>
+                </div>
+                <div style="padding: 1rem; border-top: 1px solid var(--color-border);">
+                    <a href="#" class="btn btn-primary btn-sm btn-block touch-target" style="text-align: center;">Ingresar al Aula (Admin)</a>
+                </div>
+            `;
+            container.appendChild(el);
+        });
+    } catch (error) {
+        console.error("Error cargando cursos del instructor", error);
+    }
 }
+
+// Función global para dar de baja
+window.dropCourse = async function(courseId) {
+    if(confirm('¿Estás SEGURO de cancelar tu inscripción? Perderás tu vacante.')) {
+        const user = window.authFirebase.currentUser;
+        if(user) {
+            try {
+                const userRef = window.db.collection('users').doc(user.uid);
+                await userRef.update({
+                    cursos: firebase.firestore.FieldValue.arrayRemove(courseId)
+                });
+                alert('Se ha cancelado tu inscripción exitosamente.');
+                window.location.reload();
+            } catch (e) {
+                console.error(e);
+                alert('Error al procesar la baja.');
+            }
+        }
+    }
+};
 
 
 // ==============================================

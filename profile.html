@@ -5,7 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mi Perfil | CFP N° 403</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css?v=3">
+    <link rel="stylesheet" href="css/styles.css?v=4">
+    <style>
+        /* Offcanvas / Modal para Datos Personales */
+        .offcanvas { position: fixed; inset: 0 0 0 auto; width: 100%; max-width: 400px; background: white; box-shadow: -5px 0 15px rgba(0,0,0,0.1); transform: translateX(100%); transition: transform 0.3s ease; z-index: 1000; display: flex; flex-direction: column; }
+        .offcanvas.active { transform: translateX(0); }
+        .offcanvas-header { padding: 1.5rem; border-bottom: 1px solid var(--color-border); display: flex; justify-content: space-between; align-items: center; }
+        .offcanvas-body { padding: 1.5rem; overflow-y: auto; flex: 1; }
+        .offcanvas-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 999; display: none; }
+        .offcanvas-overlay.active { display: block; }
+        .close-btn { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--color-gray); }
+        
+        /* Ocultar botones de instructor/alumno condicionalmente */
+        .instructor-only { display: none; }
+        .alumno-only { display: block; }
+    </style>
 </head>
 <body class="bg-light">
     <!-- Navbar -->
@@ -14,72 +28,90 @@
             <div class="logo">
                 <a href="index.html" class="d-flex align-items-center" style="display: flex; align-items: center; gap: 12px;">
                     <img src="img/LOGO CFP 403 CHICO (1).png" alt="Logo CFP 403" class="nav-logo">
-                    <h1>Portal del <span class="text-primary">Alumno</span></h1>
+                    <h1>Portal <span class="text-primary" id="portal-role-title">del Alumno</span></h1>
                 </a>
             </div>
             <nav class="nav-links">
-                <a href="index.html" class="touch-target">Catálogo de Cursos</a>
+                <a href="index.html" class="touch-target alumno-only" id="link-catalogo">Catálogo de Cursos</a>
+                <button id="btn-open-profile" class="btn btn-outline touch-target">Mis Datos</button>
                 <a href="#" id="logout-btn" class="btn btn-outline touch-target" style="border-color: var(--color-danger); color: var(--color-danger);">Cerrar Sesión</a>
             </nav>
         </div>
     </header>
 
     <main class="container py-5">
-        <div class="grid" style="grid-template-columns: 1fr 2fr; gap: 2rem;">
+        <!-- Panel Principal: Mis Cursos -->
+        <div>
+            <h2 class="mb-4" id="main-courses-title">Mis Aulas y Cursos</h2>
             
-            <!-- Panel Lateral: Mis Datos -->
-            <div class="card p-4">
-                <h3 class="mb-4 text-primary">Mis Datos Personales</h3>
-                <form id="profile-form">
-                    <div class="form-group">
-                        <label>DNI (Usuario)</label>
-                        <input type="text" id="prof-dni" class="form-control" disabled>
-                        <small class="form-text">El DNI no puede modificarse. Contacta a administración si hay un error.</small>
-                    </div>
-                    <div class="form-group">
-                        <label>Apellidos</label>
-                        <input type="text" id="prof-apellidos" class="form-control touch-target" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Nombres</label>
-                        <input type="text" id="prof-nombres" class="form-control touch-target" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Email</label>
-                        <input type="email" id="prof-email" class="form-control touch-target" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Teléfono</label>
-                        <input type="tel" id="prof-telefono" class="form-control touch-target" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-block touch-target mt-4" style="justify-content: center;">Guardar Cambios</button>
-                </form>
+            <div id="no-courses-msg" class="alert alert-info" style="display: none;">
+                <span class="alumno-only">Todavía no te has inscripto a ningún curso activo. <a href="index.html#cursos" class="font-bold">Explora la oferta educativa.</a></span>
+                <span class="instructor-only">Aún no tienes aulas asignadas para dictar clases.</span>
             </div>
 
-            <!-- Panel Principal: Mis Cursos -->
-            <div>
-                <h2 class="mb-4">Mis Inscripciones</h2>
-                
-                <div id="no-courses-msg" class="alert alert-info" style="display: none;">
-                    Todavía no te has inscripto a ningún curso. <a href="index.html#cursos" class="font-bold">Explora la oferta educativa 2026.</a>
-                </div>
-
-                <div id="my-courses-container" class="grid grid-2">
-                    <!-- Los cursos se inyectan dinámicamente aquí -->
-                </div>
+            <div id="my-courses-container" class="grid grid-3">
+                <!-- Los cursos se inyectan dinámicamente aquí (desde Firestore) -->
             </div>
-
         </div>
     </main>
+
+    <!-- Offcanvas Datos Personales -->
+    <div class="offcanvas-overlay" id="profile-overlay"></div>
+    <div class="offcanvas" id="profile-offcanvas">
+        <div class="offcanvas-header">
+            <h3 class="text-primary">Mis Datos Personales</h3>
+            <button class="close-btn" id="btn-close-profile">&times;</button>
+        </div>
+        <div class="offcanvas-body">
+            <form id="profile-form">
+                <div class="form-group">
+                    <label>DNI (Usuario)</label>
+                    <input type="text" id="prof-dni" class="form-control" disabled>
+                </div>
+                <div class="form-group">
+                    <label>Apellidos</label>
+                    <input type="text" id="prof-apellidos" class="form-control touch-target" required>
+                </div>
+                <div class="form-group">
+                    <label>Nombres</label>
+                    <input type="text" id="prof-nombres" class="form-control touch-target" required>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="prof-email" class="form-control touch-target" required>
+                </div>
+                <div class="form-group">
+                    <label>Teléfono</label>
+                    <input type="tel" id="prof-telefono" class="form-control touch-target" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block touch-target mt-4" style="justify-content: center;">Guardar Cambios</button>
+            </form>
+        </div>
+    </div>
 
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage-compat.js"></script>
-    <script src="js/firebase-config.js?v=3"></script>
+    <script src="js/firebase-config.js?v=4"></script>
     
-    <script src="js/auth.js?v=3"></script>
-    <script src="js/cursos.js?v=1"></script>
+    <script src="js/auth.js?v=4"></script>
+    
+    <!-- Lógica de UI local -->
+    <script>
+        document.getElementById('btn-open-profile').addEventListener('click', () => {
+            document.getElementById('profile-offcanvas').classList.add('active');
+            document.getElementById('profile-overlay').classList.add('active');
+        });
+        
+        const closeProfile = () => {
+            document.getElementById('profile-offcanvas').classList.remove('active');
+            document.getElementById('profile-overlay').classList.remove('active');
+        };
+        
+        document.getElementById('btn-close-profile').addEventListener('click', closeProfile);
+        document.getElementById('profile-overlay').addEventListener('click', closeProfile);
+    </script>
 </body>
 </html>
