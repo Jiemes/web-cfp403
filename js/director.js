@@ -97,6 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Guardamos usando la key como ID del documento en Firestore
             await window.db.collection('cursos').doc(key).set({
                 ...data,
+                inscriptos: [], // Array vacío por defecto
                 migrated: true,
                 createdAt: firebase.firestore.FieldValue.serverTimestamp()
             });

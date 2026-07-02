@@ -32,7 +32,7 @@
                 </a>
             </div>
             <nav class="nav-links">
-                <a href="index.html" class="touch-target alumno-only" id="link-catalogo">Catálogo de Cursos</a>
+                <a href="index.html" class="touch-target" id="link-catalogo">Catálogo de Cursos</a>
                 <button id="btn-open-profile" class="btn btn-outline touch-target">Mis Datos</button>
                 <a href="#" id="logout-btn" class="btn btn-outline touch-target" style="border-color: var(--color-danger); color: var(--color-danger);">Cerrar Sesión</a>
             </nav>
@@ -40,13 +40,21 @@
     </header>
 
     <main class="container py-5">
-        <!-- Panel Principal: Mis Cursos -->
-        <div>
-            <h2 class="mb-4" id="main-courses-title">Mis Aulas y Cursos</h2>
+        <!-- Panel Docencia (Oculto para alumnos) -->
+        <div id="panel-docencia" class="instructor-only mb-5" style="display: none;">
+            <h2 class="mb-4 text-primary">Mis Cursos Asignados (Docencia)</h2>
+            <div id="no-instructor-courses-msg" class="alert alert-info" style="display: none;">
+                Aún no tienes aulas asignadas para dictar clases.
+            </div>
+            <div id="instructor-courses-container" class="grid grid-3"></div>
+        </div>
+
+        <!-- Panel Alumno (Visible para todos) -->
+        <div id="panel-alumno">
+            <h2 class="mb-4" id="main-courses-title">Mis Cursos (Alumno)</h2>
             
             <div id="no-courses-msg" class="alert alert-info" style="display: none;">
-                <span class="alumno-only">Todavía no te has inscripto a ningún curso activo. <a href="index.html#cursos" class="font-bold">Explora la oferta educativa.</a></span>
-                <span class="instructor-only">Aún no tienes aulas asignadas para dictar clases.</span>
+                Todavía no te has inscripto a ningún curso activo. <a href="index.html#cursos" class="font-bold">Explora la oferta educativa.</a>
             </div>
 
             <div id="my-courses-container" class="grid grid-3">

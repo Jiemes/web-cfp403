@@ -209,20 +209,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Ocultar catálogo público si es instructor
-    if (window.authFirebase) {
-        window.authFirebase.onAuthStateChanged(async (user) => {
-            if (user) {
-                try {
-                    const udoc = await window.db.collection('users').doc(user.uid).get();
-                    if(udoc.exists && udoc.data().rol === 'instructor') {
-                        const catSection = document.getElementById('cursos');
-                        if (catSection) catSection.style.display = 'none'; // Ocultar catálogo en index si es instructor
-                    }
-                } catch(e) {}
-            }
-        });
-    }
+    // (Lógica de ocultar catálogo removida para permitir rol dual)
 
     // Iniciar fetch si estamos en index.html (donde existe el grid)
     if(grid) {

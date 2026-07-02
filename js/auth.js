@@ -119,6 +119,7 @@ function initRegister() {
                     trabajo: document.getElementById('trabajo').value || 'NO',
                     salud: document.getElementById('salud').value || 'NO',
                     cursos: [], // Array de IDs de cursos
+                    rol: 'alumno', // Rol por defecto
                     createdAt: firebase.firestore.FieldValue.serverTimestamp()
                 });
 
@@ -200,16 +201,14 @@ function initProfile() {
                 // Adaptar UI según rol
                 if (userRole === 'instructor') {
                     document.getElementById('portal-role-title').textContent = 'Docente';
-                    document.querySelectorAll('.alumno-only').forEach(el => el.style.display = 'none');
                     document.querySelectorAll('.instructor-only').forEach(el => el.style.display = 'block');
-                    document.getElementById('main-courses-title').textContent = 'Mis Aulas Asignadas';
                     // Renderizar aulas asignadas al docente
                     renderInstructorCourses(user.uid);
+                    // Renderizar cursos inscriptos del alumno (rol dual)
+                    renderEnrolledCourses(userData.cursos || []);
                 } else {
                     document.getElementById('portal-role-title').textContent = 'del Alumno';
-                    document.querySelectorAll('.alumno-only').forEach(el => el.style.display = 'block');
                     document.querySelectorAll('.instructor-only').forEach(el => el.style.display = 'none');
-                    document.getElementById('main-courses-title').textContent = 'Mis Cursos y Aulas';
                     // Renderizar cursos inscriptos del alumno
                     renderEnrolledCourses(userData.cursos || []);
                 }
@@ -310,8 +309,8 @@ async function renderEnrolledCourses(enrolledIds) {
 }
 
 async function renderInstructorCourses(instructorUid) {
-    const container = document.getElementById('my-courses-container');
-    const noCourses = document.getElementById('no-courses-msg');
+    const container = document.getElementById('instructor-courses-container');
+    const noCourses = document.getElementById('no-instructor-courses-msg');
     
     if (!container || !noCourses) return;
 
