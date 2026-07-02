@@ -27,7 +27,7 @@ function initStepper() {
     
     if (nextBtn && prevBtn) {
         nextBtn.addEventListener('click', () => {
-            const requiredFields = ['email', 'nombres', 'dni', 'ciudad_res', 'direccion', 'telefono', 'estudios'];
+            const requiredFields = ['email', 'apellidos', 'nombres', 'dni', 'ciudad_res', 'direccion', 'telefono', 'estudios', 'archivo_dni'];
             let valid = true;
             requiredFields.forEach(id => {
                 const el = document.getElementById(id);
@@ -64,11 +64,18 @@ function initStepper() {
 // ==============================================
 function initRegister() {
     const dniInput = document.getElementById('dni');
+    const apellidosInput = document.getElementById('apellidos');
     const nombresInput = document.getElementById('nombres');
     const form = document.getElementById('register-form');
 
     sanitizeDNI(dniInput);
     
+    if (apellidosInput) {
+        apellidosInput.addEventListener('blur', (e) => {
+            e.target.value = capitalizeNames(e.target.value);
+        });
+    }
+
     if (nombresInput) {
         nombresInput.addEventListener('blur', (e) => {
             e.target.value = capitalizeNames(e.target.value);
@@ -101,6 +108,7 @@ function initRegister() {
                 await db.collection('users').doc(user.uid).set({
                     dni: dni,
                     email: realEmail,
+                    apellidos: apellidosInput.value,
                     nombres: nombresInput.value,
                     ciudad_res: document.getElementById('ciudad_res').value,
                     direccion: document.getElementById('direccion').value,
@@ -182,6 +190,7 @@ function initProfile() {
             if (doc.exists) {
                 const userData = doc.data();
                 document.getElementById('prof-dni').value = userData.dni;
+                document.getElementById('prof-apellidos').value = userData.apellidos || '';
                 document.getElementById('prof-nombres').value = userData.nombres;
                 document.getElementById('prof-email').value = userData.email;
                 document.getElementById('prof-telefono').value = userData.telefono;
@@ -201,6 +210,7 @@ function initProfile() {
 
         try {
             await db.collection('users').doc(user.uid).update({
+                apellidos: document.getElementById('prof-apellidos').value,
                 nombres: document.getElementById('prof-nombres').value,
                 email: document.getElementById('prof-email').value,
                 telefono: document.getElementById('prof-telefono').value
@@ -244,7 +254,7 @@ function renderEnrolledCourses(enrolledIds) {
                         el.className = 'card course-card';
                         el.innerHTML = `
                             <div class="card-content">
-                                <span class="badge mb-2 bg-success">Pre-Inscripto</span>
+                                <span class="badge mb-2 bg-success">Inscripto</span>
                                 <h3>${data.title}</h3>
                                 <p class="text-sm text-gray mt-2">📍 ${data.sede}</p>
                                 <p class="text-sm text-gray">📅 ${data.horario}</p>

@@ -154,7 +154,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 if(!currentCursos.includes(courseId)) {
                                     currentCursos.push(courseId);
                                     await userRef.update({ cursos: currentCursos });
-                                    alert('¡Pre-inscripción confirmada! Revisa tu panel.');
+                                    alert('¡Inscripción confirmada! Revisa tu panel.');
                                     window.location.href = 'profile.html';
                                 } else {
                                     alert('Ya estás inscripto en este curso.');

@@ -14,8 +14,8 @@
                 <a href="index.html">
                     <img src="img/LOGO CFP 403 CHICO (1).png" alt="Logo CFP 403">
                 </a>
-                <h2>Registro de Alumnos</h2>
-                <p class="text-gray text-sm mt-2">Completa tus datos para pre-inscribirte a los trayectos formativos oficiales.</p>
+                <h2>Registro de Usuarios</h2>
+                <p class="text-gray text-sm mt-2">Completa tus datos para inscribirte a los trayectos formativos oficiales.</p>
             </div>
 
             <!-- Stepper Indicators -->
@@ -34,9 +34,12 @@
                             <input type="text" id="dni" class="form-control touch-target" required maxlength="10">
                         </div>
                         <div class="form-group">
-                            <label for="nombres">Apellidos y Nombres Completos *</label>
+                            <label for="apellidos">Apellidos *</label>
+                            <input type="text" id="apellidos" class="form-control touch-target" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="nombres">Nombres *</label>
                             <input type="text" id="nombres" class="form-control touch-target" required>
-                            <small class="form-text">Ej: Perez Juan Manuel</small>
                         </div>
                         <div class="form-group">
                             <label for="email">Correo Electrónico *</label>
@@ -66,25 +69,25 @@
                             <label for="estudios">Estudios Alcanzados *</label>
                             <select id="estudios" class="form-control touch-target" required>
                                 <option value="">Seleccione una opción...</option>
-                                <option value="Primario Incompleto">Primario Incompleto</option>
                                 <option value="Primario Completo">Primario Completo</option>
-                                <option value="Secundario Incompleto">Secundario Incompleto</option>
                                 <option value="Secundario Completo">Secundario Completo</option>
-                                <option value="Terciario/Universitario">Terciario/Universitario</option>
+                                <option value="Terciario">Terciario</option>
+                                <option value="Universitario">Universitario</option>
                             </select>
                         </div>
                         <div class="form-group" style="grid-column: 1 / -1;">
                             <label for="trabajo">Trabajo Actual</label>
-                            <input type="text" id="trabajo" class="form-control touch-target" placeholder="De no trabajar solo escriba NO">
+                            <input type="text" id="trabajo" class="form-control touch-target">
+                            <small class="form-text" style="font-size: 0.75rem;">De no trabajar solo escriba NO</small>
                         </div>
                         <div class="form-group" style="grid-column: 1 / -1;">
                             <label for="salud">¿Tiene algún problema de salud, alergia o patología? ¿Cuál?</label>
-                            <input type="text" id="salud" class="form-control touch-target" placeholder="De no poseer solo escriba NO">
+                            <input type="text" id="salud" class="form-control touch-target">
+                            <small class="form-text" style="font-size: 0.75rem;">De no poseer solo escriba NO</small>
                         </div>
                         <div class="form-group" style="grid-column: 1 / -1;">
-                            <label for="archivo_dni">Subir archivo de la imagen del DNI de ambos lados (PDF/JPG)</label>
-                            <input type="file" id="archivo_dni" class="form-control touch-target" accept=".pdf,image/*">
-                            <small class="form-text">Si no tienes el archivo ahora, podrás adjuntarlo más tarde en tu perfil.</small>
+                            <label for="archivo_dni">Subir archivo de la imagen del DNI de ambos lados (PDF/JPG) *</label>
+                            <input type="file" id="archivo_dni" class="form-control touch-target" accept=".pdf,image/*" required>
                         </div>
                     </div>
                     <div class="mt-4" style="text-align: right;">
