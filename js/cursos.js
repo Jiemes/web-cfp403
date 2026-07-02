@@ -88,6 +88,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    window.cfpCoursesData = coursesData; // Export para profile.html
+
     const modal = document.getElementById('course-slideover');
     const closeBtn = document.getElementById('close-modal');
     const courseCards = document.querySelectorAll('.course-card');
@@ -126,8 +128,39 @@ document.addEventListener('DOMContentLoaded', () => {
                 highlightContainer.style.display = 'none';
             }
 
-            // Actualizar CTA enlace
-            document.getElementById('modal-register-btn').href = `register.html?curso=${courseId}`;
+            // Lógica del CTA de inscripción
+            const ctaBtn = document.getElementById('modal-register-btn');
+            
+            // Limpiamos event listeners anteriores clonando el nodo
+            const newCtaBtn = ctaBtn.cloneNode(true);
+            ctaBtn.parentNode.replaceChild(newCtaBtn, ctaBtn);
+            
+            newCtaBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                // Chequear auth
+                const userDni = localStorage.getItem('cfp_current_user');
+                if (userDni) {
+                    // Usuario logueado: confirmar inscripción
+                    if(confirm(`¿Estás seguro de que quieres anotarte en ${data.title}?`)) {
+                        const users = JSON.parse(localStorage.getItem('cfp_users') || '{}');
+                        const user = users[userDni];
+                        
+                        if(!user.cursos.includes(courseId)) {
+                            user.cursos.push(courseId);
+                            localStorage.setItem('cfp_users', JSON.stringify(users));
+                            alert('¡Pre-inscripción confirmada! Revisa tu panel.');
+                            window.location.href = 'profile.html';
+                        } else {
+                            alert('Ya estás inscripto en este curso.');
+                            window.location.href = 'profile.html';
+                        }
+                    }
+                } else {
+                    // Usuario no logueado: ir a register
+                    window.location.href = `register.html?curso=${courseId}`;
+                }
+            });
 
             // Mostrar modal
             modal.classList.add('active');

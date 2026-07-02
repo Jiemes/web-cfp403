@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Perfil | CFP N° 403</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css?v=3">
+</head>
+<body class="bg-light">
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="container nav-container">
+            <div class="logo">
+                <a href="index.html" class="d-flex align-items-center" style="display: flex; align-items: center; gap: 12px;">
+                    <img src="img/LOGO CFP 403 CHICO (1).png" alt="Logo CFP 403" class="nav-logo">
+                    <h1>Portal del <span class="text-primary">Alumno</span></h1>
+                </a>
+            </div>
+            <nav class="nav-links">
+                <a href="index.html" class="touch-target">Catálogo de Cursos</a>
+                <a href="#" id="logout-btn" class="btn btn-outline touch-target" style="border-color: var(--color-danger); color: var(--color-danger);">Cerrar Sesión</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container py-5">
+        <div class="grid" style="grid-template-columns: 1fr 2fr; gap: 2rem;">
+            
+            <!-- Panel Lateral: Mis Datos -->
+            <div class="card p-4">
+                <h3 class="mb-4 text-primary">Mis Datos Personales</h3>
+                <form id="profile-form">
+                    <div class="form-group">
+                        <label>DNI (Usuario)</label>
+                        <input type="text" id="prof-dni" class="form-control" disabled>
+                        <small class="form-text">El DNI no puede modificarse. Contacta a administración si hay un error.</small>
+                    </div>
+                    <div class="form-group">
+                        <label>Nombre Completo</label>
+                        <input type="text" id="prof-nombres" class="form-control touch-target" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="prof-email" class="form-control touch-target" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Teléfono</label>
+                        <input type="tel" id="prof-telefono" class="form-control touch-target" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block touch-target mt-4" style="justify-content: center;">Guardar Cambios</button>
+                </form>
+            </div>
+
+            <!-- Panel Principal: Mis Cursos -->
+            <div>
+                <h2 class="mb-4">Mis Pre-Inscripciones</h2>
+                
+                <div id="no-courses-msg" class="alert alert-info" style="display: none;">
+                    Todavía no te has inscripto a ningún curso. <a href="index.html#cursos" class="font-bold">Explora la oferta educativa 2026.</a>
+                </div>
+
+                <div id="my-courses-container" class="grid grid-2">
+                    <!-- Los cursos se inyectan dinámicamente aquí -->
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script src="js/auth.js?v=1"></script>
+    <script src="js/cursos.js?v=1"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const currentUser = DB.getCurrentUser();
+            if (!currentUser) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Llenar formulario de perfil
+            document.getElementById('prof-dni').value = currentUser.dni;
+            document.getElementById('prof-nombres').value = currentUser.nombres;
+            document.getElementById('prof-email').value = currentUser.email;
+            document.getElementById('prof-telefono').value = currentUser.telefono;
+
+            // Guardar cambios
+            document.getElementById('profile-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const users = DB.getUsers();
+                users[currentUser.dni].nombres = document.getElementById('prof-nombres').value;
+                users[currentUser.dni].email = document.getElementById('prof-email').value;
+                users[currentUser.dni].telefono = document.getElementById('prof-telefono').value;
+                DB.saveUsers(users);
+                alert('Datos actualizados exitosamente.');
+            });
+
+            // Cerrar Sesión
+            document.getElementById('logout-btn').addEventListener('click', (e) => {
+                e.preventDefault();
+                DB.logout();
+                window.location.href = 'index.html';
+            });
+
+            // Mostrar Cursos Inscritos (utiliza coursesData de cursos.js que debe estar cargado)
+            const container = document.getElementById('my-courses-container');
+            const noCourses = document.getElementById('no-courses-msg');
+
+            // Necesitamos acceder a la data de cursos, exportémosla globalmente en cursos.js si no lo está.
+            // Para la maqueta, haremos un intervalo rápido para asegurar que coursesData exista en window
+            const renderCourses = () => {
+                if (window.cfpCoursesData) {
+                    const enrolled = currentUser.cursos || [];
+                    if (enrolled.length === 0) {
+                        noCourses.style.display = 'block';
+                    } else {
+                        enrolled.forEach(cId => {
+                            const data = window.cfpCoursesData[cId];
+                            if(data) {
+                                const el = document.createElement('div');
+                                el.className = 'card course-card';
+                                el.innerHTML = `
+                                    <div class="card-content">
+                                        <span class="badge mb-2 bg-success">Pre-Inscripto</span>
+                                        <h3>${data.title}</h3>
+                                        <p class="text-sm text-gray mt-2">📍 ${data.sede}</p>
+                                        <p class="text-sm text-gray">📅 ${data.horario}</p>
+                                    </div>
+                                `;
+                                container.appendChild(el);
+                            }
+                        });
+                    }
+                } else {
+                    setTimeout(renderCourses, 50);
+                }
+            };
+            renderCourses();
+        });
+    </script>
+</body>
+</html>

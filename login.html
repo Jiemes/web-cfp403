@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acceso Alumnos | CFP N° 403</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css?v=3">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <a href="index.html">
+                    <img src="img/LOGO CFP 403 CHICO (1).png" alt="Logo CFP 403">
+                </a>
+                <h2>Iniciar Sesión</h2>
+                <p class="text-gray text-sm mt-2">Accede a tu panel para gestionar tus pre-inscripciones.</p>
+            </div>
+
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="login-dni">Número de DNI (Usuario)</label>
+                    <input type="text" id="login-dni" class="form-control touch-target" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Contraseña</label>
+                    <input type="password" id="login-password" class="form-control touch-target" required>
+                </div>
+                <div class="form-group text-right" style="text-align: right;">
+                    <a href="#" id="forgot-password-btn" class="text-sm text-primary touch-target">¿Olvidaste tu contraseña?</a>
+                </div>
+                
+                <button type="submit" class="btn btn-gradient btn-block btn-large mt-4 touch-target" style="justify-content: center;">Ingresar</button>
+            </form>
+
+            <div class="text-center mt-4">
+                <p class="text-sm text-gray">¿No tienes cuenta? <a href="register.html" class="text-primary font-bold touch-target">Regístrate gratis</a>.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Recuperar Contraseña -->
+    <div id="recover-modal" class="modal-overlay">
+        <div class="modal-box">
+            <h3 class="mb-3 text-primary">Recuperar Acceso</h3>
+            <p class="text-sm text-gray mb-4">Ingresa el correo electrónico asociado a tu cuenta. Te enviaremos un enlace de recuperación.</p>
+            <form id="recover-form">
+                <div class="form-group text-left" style="text-align: left;">
+                    <input type="email" class="form-control touch-target" placeholder="tu@email.com" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block touch-target mt-3" style="justify-content: center;">Enviar Enlace</button>
+            </form>
+            <button id="close-recover" class="btn btn-outline touch-target mt-3" style="width: 100%;">Cancelar</button>
+        </div>
+    </div>
+
+    <script src="js/auth.js?v=1"></script>
+</body>
+</html>

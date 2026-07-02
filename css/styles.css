@@ -567,6 +567,180 @@ img {
     .bento-novedades { grid-column: 2 / 3; }
 }
 
+/* ==========================================================================
+   FORMS, AUTH & DASHBOARD
+   ========================================================================== */
+
+/* Layout Auth */
+.auth-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-light-bg);
+    padding: 2rem;
+}
+.auth-card {
+    background: var(--color-surface);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-lg);
+    width: 100%;
+    max-width: 500px;
+    padding: 3rem 2rem;
+    border: 1px solid var(--color-border);
+}
+.auth-card.large {
+    max-width: 800px;
+}
+.auth-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+.auth-header img {
+    height: 60px;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+}
+
+/* Form Controls */
+.form-group {
+    margin-bottom: 1.25rem;
+}
+.form-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--text-dark);
+}
+.form-control {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    font-family: inherit;
+    font-size: 1rem;
+    transition: var(--transition);
+    background-color: #f8fafc;
+}
+.form-control:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    background-color: white;
+    box-shadow: 0 0 0 3px rgba(0, 188, 212, 0.1);
+}
+.form-control:disabled {
+    background-color: #e2e8f0;
+    cursor: not-allowed;
+    color: var(--text-gray);
+}
+.form-text {
+    display: block;
+    margin-top: 0.25rem;
+    font-size: 0.85rem;
+    color: var(--text-gray);
+}
+
+/* Stepper */
+.stepper-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    position: relative;
+}
+.stepper-header::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--color-border);
+    z-index: 1;
+    transform: translateY(-50%);
+}
+.step {
+    background: var(--color-surface);
+    border: 2px solid var(--color-border);
+    color: var(--text-gray);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    position: relative;
+    z-index: 2;
+    transition: var(--transition);
+}
+.step.active {
+    border-color: var(--color-primary);
+    background: var(--color-primary);
+    color: white;
+}
+.step-content {
+    display: none;
+    animation: fadeIn 0.4s ease;
+}
+.step-content.active {
+    display: block;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Alerts / Banners */
+.alert {
+    padding: 1rem 1.25rem;
+    border-radius: var(--border-radius);
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+}
+.alert-info {
+    background: rgba(0, 188, 212, 0.1);
+    color: var(--color-primary-dark);
+    border: 1px solid rgba(0, 188, 212, 0.2);
+}
+.alert-danger {
+    background: rgba(239, 68, 68, 0.1);
+    color: var(--color-danger);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+/* Modal General */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(11, 15, 25, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+.modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+.modal-box {
+    background: var(--color-surface);
+    width: 90%;
+    max-width: 400px;
+    border-radius: var(--border-radius-lg);
+    padding: 2rem;
+    box-shadow: var(--shadow-lg);
+    transform: scale(0.9);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-align: center;
+}
+.modal-overlay.active .modal-box {
+    transform: scale(1);
+}
+
 @media (max-width: 768px) {
     .hero-title { font-size: 2.5rem; }
     .typewriter-text, .typewriter-cursor { font-size: 1.25rem; }
