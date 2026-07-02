@@ -47,10 +47,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const typewriterElement = document.querySelector('.typewriter-text');
     if (typewriterElement) {
         const words = [
-            "en Programación",
-            "en Inteligencia Artificial",
-            "en Robótica",
-            "y Oficios del Futuro"
+            "en Habilidades Digitales e I.A.",
+            "en Diseño Gráfico y Marketing Digital",
+            "en Desarrollo de Software y Videojuegos",
+            "en Desarrollo Web y Mobile",
+            "en Producción Hortícola y Cultivos Especializados",
+            "en Confección y Emprendimientos Textiles",
+            "en Organización de Eventos",
+            "en Gastronomía"
         ];
         let wordIndex = 0;
         let charIndex = 0;
