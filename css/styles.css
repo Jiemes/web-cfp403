@@ -241,7 +241,7 @@ img {
 
 /* Typewriter Cursor & Text */
 .typewriter-text, .typewriter-cursor {
-    font-size: 2.4rem;
+    font-size: 1.8rem;
 }
 .typewriter-cursor {
     animation: blink 0.8s infinite;
@@ -569,7 +569,7 @@ img {
 
 @media (max-width: 768px) {
     .hero-title { font-size: 2.5rem; }
-    .typewriter-text, .typewriter-cursor { font-size: 1.5rem; }
+    .typewriter-text, .typewriter-cursor { font-size: 1.25rem; }
     .nav-links {
         display: none;
         position: absolute;
