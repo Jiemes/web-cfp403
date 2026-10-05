@@ -300,39 +300,191 @@ img {
     z-index: 1;
 }
 
-/* Touch Swipe Carousels */
+/* Touch Swipe Carousels & Drag-to-Scroll Desktop Support */
 .touch-swipe-carousel {
     display: flex;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
-    gap: 1.5rem;
+    gap: 1.25rem;
     -ms-overflow-style: none; /* IE/Edge */
     scrollbar-width: none; /* Firefox */
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+    scroll-behavior: smooth;
+    padding-bottom: 0.5rem;
 }
 .touch-swipe-carousel::-webkit-scrollbar { display: none; } /* Chrome/Safari */
 
-/* Novedades (Carousel) */
+.touch-swipe-carousel.is-dragging {
+    cursor: grabbing !important;
+    scroll-snap-type: none !important;
+    scroll-behavior: auto !important;
+}
+
+/* Controles de Navegación de Carruseles (Flechas PC/Móvil) */
+.carousel-nav-controls {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.carousel-nav-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    color: #ffffff;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 0;
+}
+
+.carousel-nav-btn:hover:not(:disabled) {
+    background: var(--color-primary);
+    color: #ffffff;
+    border-color: var(--color-primary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 14px rgba(0, 188, 212, 0.45);
+}
+
+.carousel-nav-btn:active:not(:disabled) {
+    transform: scale(0.92);
+}
+
+.carousel-nav-btn:disabled {
+    opacity: 0.25;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.carousel-nav-btn.light {
+    background: #ffffff;
+    border: 1px solid var(--color-border);
+    color: var(--text-dark);
+    box-shadow: var(--shadow-sm);
+}
+
+.carousel-nav-btn.light:hover:not(:disabled) {
+    background: var(--color-primary);
+    color: #ffffff;
+    border-color: var(--color-primary);
+    box-shadow: 0 4px 12px rgba(0, 188, 212, 0.3);
+}
+
+/* Indicadores de Puntos (Dots) */
+.carousel-dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    padding: 0 2rem 1.25rem;
+}
+
+.carousel-dots.light {
+    padding: 1.25rem 0 0;
+}
+
+.carousel-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.25);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 0;
+}
+
+.carousel-dot.active {
+    width: 24px;
+    background: var(--color-primary);
+    box-shadow: 0 0 10px rgba(0, 188, 212, 0.6);
+}
+
+.carousel-dots.light .carousel-dot {
+    background: #cbd5e1;
+}
+
+.carousel-dots.light .carousel-dot.active {
+    background: var(--color-primary);
+}
+
+/* Novedades (Carousel Bento) */
 .bento-novedades {
     background: var(--color-dark-bg);
     color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
-.bento-header { padding: 2rem 2rem 1rem; }
+
+.bento-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.75rem 2rem 1rem;
+    gap: 1rem;
+}
+
+.bento-header h3 {
+    margin: 0;
+    font-size: 1.25rem;
+    line-height: 1.2;
+}
+
+.bento-subtitle {
+    display: block;
+    font-size: 0.8rem;
+    color: #94a3b8;
+    margin-top: 4px;
+    font-weight: 400;
+}
+
 .novedades-carousel {
-    padding: 0 2rem 2rem;
+    padding: 0 2rem 1rem;
 }
+
 .news-card {
-    min-width: 250px;
-    background: rgba(255,255,255,0.1);
+    flex: 0 0 calc(100% - 24px);
+    min-width: 240px;
+    max-width: 340px;
+    background: rgba(255, 255, 255, 0.08);
     border-radius: var(--border-radius);
     padding: 1.5rem;
     scroll-snap-align: start;
-    border: 1px solid rgba(255,255,255,0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
-.news-card h4 { margin: 0.5rem 0; font-size: 1.1rem; }
+
+.news-card:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(0, 188, 212, 0.45);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.news-card h4 {
+    margin: 0.5rem 0;
+    font-size: 1.15rem;
+    line-height: 1.3;
+    color: #ffffff;
+}
 
 /* Entornos Carousel */
 .entornos-carousel .entorno-card {
-    min-width: 300px;
+    min-width: 320px;
+    flex: 0 0 320px;
     height: 350px;
     border-radius: var(--border-radius-lg);
     background-size: cover;
@@ -344,11 +496,19 @@ img {
     padding: 2rem;
     color: white;
     box-shadow: var(--shadow-md);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
+.entornos-carousel .entorno-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+
 .entorno-info h3 {
     font-size: 1.5rem;
     margin-bottom: 0.5rem;
 }
+
 .entorno-info p {
     font-size: 0.95rem;
     opacity: 0.9;
@@ -556,6 +716,12 @@ img {
 .footer-bottom { background: #05080c; padding: 1.5rem 0; text-align: center; font-size: 0.875rem; color: #9ca3af; }
 
 /* Responsive Media Queries */
+@media (max-width: 640px) {
+    .d-none-mobile {
+        display: none !important;
+    }
+}
+
 @media (min-width: 768px) {
     .bento-grid { grid-template-columns: 1fr 1fr; }
     .bento-institucional { grid-column: 1 / -1; }

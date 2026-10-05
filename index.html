@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css?v=2">
+    <link rel="stylesheet" href="css/styles.css?v=3">
 </head>
 <body>
     <!-- Splash Screen -->
@@ -44,9 +44,9 @@
 
     <!-- Hero Section Animada -->
     <section class="hero hero-slideshow">
-        <div class="hero-bg-layer slide-active" style="background-image: url('img/practicas-1.jpg');"></div>
-        <div class="hero-bg-layer" style="background-image: url('img/practicas-2.jpg');"></div>
-        <div class="hero-bg-layer" style="background-image: url('img/curso-web.jpg');"></div>
+        <div class="hero-bg-layer slide-active" style="background-image: url('img/fp_banner_institucional.png');"></div>
+        <div class="hero-bg-layer" style="background-image: url('img/11.jpg');"></div>
+        <div class="hero-bg-layer" style="background-image: url('img/11.jpeg');"></div>
         <div class="hero-overlay"></div>
         
         <div class="container hero-content relative z-10">
@@ -73,15 +73,26 @@
                         <p class="text-gray mb-4">En el <strong>Centro de Formación Profesional N° 403</strong> de Mercedes, impulsamos el desarrollo de nuestra comunidad <strong style="color: var(--text-dark);">transformando el conocimiento en experiencias reales</strong>. Nuestra propuesta promueve el <strong>aprendizaje práctico</strong> mediante proyectos concretos y capacitaciones alineadas al <strong>sector productivo actual</strong>. Acompañamos a cada estudiante en su trayecto formativo, generando vinculaciones clave para potenciar sus capacidades y asegurar una <strong class="text-primary">rápida y efectiva inserción laboral</strong>.</p>
                         <a href="portfolio.html" class="btn btn-outline touch-target">Ver proyectos de alumnos</a>
                     </div>
-                    <div class="bento-image-bg" style="background-image: url('img/practicas-1.jpg');"></div>
+                    <div class="bento-image-bg" style="background-image: url('img/11.jpg'); opacity: 0.15;"></div>
                 </div>
 
-                <!-- Novedades (Carousel Scroll Snap) -->
-                <div class="bento-card bento-novedades">
+                <!-- Novedades (Carousel Scroll Snap con controles PC/Móvil) -->
+                <div class="bento-card bento-novedades" id="bento-novedades-card">
                     <div class="bento-header">
-                        <h3>Agenda y Novedades</h3>
+                        <div>
+                            <h3>Agenda y Novedades</h3>
+                            <span class="bento-subtitle">Información institucional</span>
+                        </div>
+                        <div class="carousel-nav-controls">
+                            <button type="button" class="carousel-nav-btn" id="novedades-prev" aria-label="Novedad anterior" title="Anterior">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                            </button>
+                            <button type="button" class="carousel-nav-btn" id="novedades-next" aria-label="Novedad siguiente" title="Siguiente">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                            </button>
+                        </div>
                     </div>
-                    <div class="novedades-carousel touch-swipe-carousel">
+                    <div class="novedades-carousel touch-swipe-carousel" id="novedades-carousel">
                         <div class="news-card">
                             <span class="text-sm text-primary font-bold">15 Mar 2026</span>
                             <h4>Apertura de inscripciones</h4>
@@ -98,6 +109,11 @@
                             <p class="text-sm text-gray">Nuevo equipamiento de última generación.</p>
                         </div>
                     </div>
+                    <div class="carousel-dots" id="novedades-dots">
+                        <button type="button" class="carousel-dot active" data-index="0" aria-label="Ir a novedad 1"></button>
+                        <button type="button" class="carousel-dot" data-index="1" aria-label="Ir a novedad 2"></button>
+                        <button type="button" class="carousel-dot" data-index="2" aria-label="Ir a novedad 3"></button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -106,30 +122,47 @@
     <!-- Entornos y Proyectos Interactivos -->
     <section id="entornos" class="section">
         <div class="container">
-            <div class="d-flex justify-content-between align-items-center mb-4" style="display:flex; justify-content:space-between; align-items:center;">
-                <h2 class="section-title" style="margin-bottom:0;">Entornos Formativos</h2>
-                <span class="text-gray text-sm">Desliza para explorar &rarr;</span>
+            <div class="d-flex justify-content-between align-items-center mb-4" style="display:flex; justify-content:space-between; align-items:center; gap: 1rem; flex-wrap: wrap;">
+                <div>
+                    <h2 class="section-title" style="margin-bottom:0;">Entornos Formativos</h2>
+                </div>
+                <div class="d-flex align-items-center gap-3">
+                    <span class="text-gray text-sm d-none-mobile">Desliza o navega &rarr;</span>
+                    <div class="carousel-nav-controls">
+                        <button type="button" class="carousel-nav-btn light" id="entornos-prev" aria-label="Entorno anterior" title="Anterior">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                        </button>
+                        <button type="button" class="carousel-nav-btn light" id="entornos-next" aria-label="Entorno siguiente" title="Siguiente">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </button>
+                    </div>
+                </div>
             </div>
             
-            <div class="entornos-carousel touch-swipe-carousel">
-                <div class="entorno-card" style="background-image: linear-gradient(to top, rgba(0,0,0,0.8), transparent), url('img/curso-web.jpg');">
+            <div class="entornos-carousel touch-swipe-carousel" id="entornos-carousel">
+                <div class="entorno-card" style="background-image: linear-gradient(to top, rgba(0,0,0,0.85), transparent), url('img/fp_banner_institucional.png');">
                     <div class="entorno-info">
                         <h3>Aula de Informática</h3>
                         <p>Equipada con PCs de última generación, ideal para desarrollo y diseño.</p>
                     </div>
                 </div>
-                <div class="entorno-card" style="background-image: linear-gradient(to top, rgba(0,0,0,0.8), transparent), url('img/curso-diseno.jpg');">
+                <div class="entorno-card" style="background-image: linear-gradient(to top, rgba(0,0,0,0.85), transparent), url('img/11.jpg');">
                     <div class="entorno-info">
                         <h3>Huertas Interactivas</h3>
                         <p>Proyecto agroecológico de economía circular y soberanía alimentaria.</p>
                     </div>
                 </div>
-                <div class="entorno-card" style="background-image: linear-gradient(to top, rgba(0,0,0,0.8), transparent), url('img/practicas-2.jpg');">
+                <div class="entorno-card" style="background-image: linear-gradient(to top, rgba(0,0,0,0.85), transparent), url('img/11.jpeg');">
                     <div class="entorno-info">
                         <h3>Proyectos Destacados</h3>
                         <p>Videojuegos, sitios web y diseños textiles de nuestros egresados.</p>
                     </div>
                 </div>
+            </div>
+            <div class="carousel-dots light mt-3" id="entornos-dots">
+                <button type="button" class="carousel-dot active" data-index="0" aria-label="Ir a entorno 1"></button>
+                <button type="button" class="carousel-dot" data-index="1" aria-label="Ir a entorno 2"></button>
+                <button type="button" class="carousel-dot" data-index="2" aria-label="Ir a entorno 3"></button>
             </div>
         </div>
     </section>
@@ -254,7 +287,7 @@
     <script src="js/firebase-config.js?v=3"></script>
     
     <script src="js/auth.js?v=3"></script>
-    <script src="js/main.js?v=2"></script>
+    <script src="js/main.js?v=3"></script>
     <script src="js/cursos.js?v=2"></script>
 </body>
 </html>
